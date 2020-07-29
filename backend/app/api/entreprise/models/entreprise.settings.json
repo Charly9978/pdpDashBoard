@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "entreprises",
+  "info": {
+    "name": "Entreprise"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "nom": {
+      "type": "string"
+    },
+    "adresse": {
+      "type": "richtext"
+    },
+    "contact": {
+      "type": "email"
+    },
+    "plan_de_preventions": {
+      "via": "entreprise",
+      "collection": "plan-de-prevention"
+    }
+  }
+}

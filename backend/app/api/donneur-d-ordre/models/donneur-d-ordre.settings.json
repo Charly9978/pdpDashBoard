@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "donneur_d_ordres",
+  "info": {
+    "name": "Donneur d'ordre"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "nom": {
+      "type": "string"
+    },
+    "prenom": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "plan_de_preventions": {
+      "via": "donneur_dordre",
+      "collection": "plan-de-prevention"
+    },
+    "service_soitec": {
+      "model": "service-soitec"
+    }
+  }
+}

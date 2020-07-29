@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/status-pdps",
+      "handler": "status-pdp.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/status-pdps/count",
+      "handler": "status-pdp.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/status-pdps/:id",
+      "handler": "status-pdp.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/status-pdps",
+      "handler": "status-pdp.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/status-pdps/:id",
+      "handler": "status-pdp.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/status-pdps/:id",
+      "handler": "status-pdp.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

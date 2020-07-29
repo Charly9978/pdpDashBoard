@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/service-soitecs",
+      "handler": "service-soitec.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/service-soitecs/count",
+      "handler": "service-soitec.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/service-soitecs/:id",
+      "handler": "service-soitec.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/service-soitecs",
+      "handler": "service-soitec.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/service-soitecs/:id",
+      "handler": "service-soitec.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/service-soitecs/:id",
+      "handler": "service-soitec.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

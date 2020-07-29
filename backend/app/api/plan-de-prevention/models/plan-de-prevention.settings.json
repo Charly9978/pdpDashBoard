@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "plan_de_preventions",
+  "info": {
+    "name": "plan de prevention"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "beginDate": {
+      "type": "date"
+    },
+    "endDate": {
+      "type": "date"
+    },
+    "Archiver": {
+      "type": "boolean",
+      "default": false
+    },
+    "descriptifIntervention": {
+      "type": "richtext"
+    },
+    "urlDossierStockage": {
+      "type": "string"
+    },
+    "donneur_dordre": {
+      "model": "donneur-d-ordre",
+      "via": "plan_de_preventions"
+    },
+    "entreprise": {
+      "model": "entreprise",
+      "via": "plan_de_preventions"
+    },
+    "status_pdp": {
+      "model": "status-pdp",
+      "via": "plan_de_preventions"
+    },
+    "commentaires": {
+      "type": "text"
+    },
+    "urlPdf": {
+      "type": "string"
+    }
+  }
+}

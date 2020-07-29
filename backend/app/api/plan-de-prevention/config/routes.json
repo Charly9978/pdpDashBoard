@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/plan-de-preventions",
+      "handler": "plan-de-prevention.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plan-de-preventions/count",
+      "handler": "plan-de-prevention.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plan-de-preventions/:id",
+      "handler": "plan-de-prevention.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/plan-de-preventions",
+      "handler": "plan-de-prevention.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/plan-de-preventions/:id",
+      "handler": "plan-de-prevention.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/plan-de-preventions/:id",
+      "handler": "plan-de-prevention.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

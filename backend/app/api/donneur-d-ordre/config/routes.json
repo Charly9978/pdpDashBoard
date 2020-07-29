@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/donneur-d-ordres",
+      "handler": "donneur-d-ordre.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/donneur-d-ordres/count",
+      "handler": "donneur-d-ordre.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/donneur-d-ordres/:id",
+      "handler": "donneur-d-ordre.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/donneur-d-ordres",
+      "handler": "donneur-d-ordre.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/donneur-d-ordres/:id",
+      "handler": "donneur-d-ordre.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/donneur-d-ordres/:id",
+      "handler": "donneur-d-ordre.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

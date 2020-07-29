@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "status_pdps",
+  "info": {
+    "name": "statusPdp"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "text": {
+      "type": "string"
+    },
+    "color": {
+      "type": "string"
+    },
+    "plan_de_preventions": {
+      "via": "status_pdp",
+      "collection": "plan-de-prevention"
+    }
+  }
+}
