@@ -23,7 +23,7 @@ export default {
       planDePreventions:[],
     }
   },
-
+//pas besoin de created avec nuxt utilisé asyncData
   async created(){
     const response = await this.$api.request({
       data: plansDePreventionsQuery
