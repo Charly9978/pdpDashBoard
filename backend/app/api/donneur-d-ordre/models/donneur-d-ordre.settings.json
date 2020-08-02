@@ -20,11 +20,13 @@
       "required": true
     },
     "plan_de_preventions": {
-      "via": "donneur_dordre",
       "collection": "plan-de-prevention"
     },
     "service_soitec": {
       "model": "service-soitec"
+    },
+    "entreprises": {
+      "collection": "entreprise"
     }
   }
 }

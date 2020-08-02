@@ -5,6 +5,16 @@ export const entrepriseByIdQuery =(id) => {return{
       nom
       adresse
       contact
+    	donneur_dordre{
+        id
+        nom
+        prenom
+        email
+        service_soitec{
+          id
+          nomService
+        }
+      }
       pdpEnCours:plan_de_preventions(where:{Archiver:false}){
         id
         donneur_dordre{
@@ -26,11 +36,18 @@ export const entrepriseByIdQuery =(id) => {return{
         urlPdf     
       }
       pdpArchive:plan_de_preventions(where:{Archiver: true}){
+      	id
         beginDate
         urlPdf
         urlDossierStockage
+      	donneur_dordre{
+          nom
+          service_soitec{nomService}
+        }
       }   
     }
+  
+  
     statusPdps{
       id
       text

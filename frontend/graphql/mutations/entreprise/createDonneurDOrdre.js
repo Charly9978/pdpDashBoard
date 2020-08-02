@@ -1,0 +1,23 @@
+export const createDonneurDOrdre=(data)=>{
+    return{
+        query:`mutation{
+            createDonneurDOrdre(input:{
+              data:{
+                nom:"${data.nom}"
+                prenom:"${data.prenom}"
+                email:"${data.email}"
+                service_soitec:"${data.service_soitec}"
+              }}){
+              donneurDOrdre{
+                id
+                nom
+                prenom
+                email
+                service_soitec{
+                  id
+                }
+              }
+            }
+          }`
+    }
+}

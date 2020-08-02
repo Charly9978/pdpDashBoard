@@ -1,14 +1,18 @@
 export const donneurOrdresQuery = {
     query: `query{
-        donneurDOrdres{
+      donneurDOrdres{
+        id
+        nom
+        prenom
+        email
+        service_soitec{
           id
-          nom
-          prenom
-          email
-          service_soitec{
-            id
-            nomService
-          }
+          nomService
         }
-      }`
+      }
+      serviceSoitecs{
+        id
+        nomService
+      }
+    }`
   }

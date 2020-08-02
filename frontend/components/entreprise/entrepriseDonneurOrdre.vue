@@ -1,41 +1,45 @@
 <template>
   <v-col cols="5">
+    <v-dialog v-model="dialog" persistent max-width="600px">
+      <entrepriseDonneurOrdreSelect v-on:annuler="dialog=false" v-on:return-donneur-ordre="changeDonneurDOrdre"></entrepriseDonneurOrdreSelect>
+    </v-dialog>
     <v-card>
       <v-card-title primary-title>
         Donneur d'ordre
         <v-spacer></v-spacer>
-
-        <v-btn v-if="!editMode" icon v-on:click="editMode = !editMode">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+        <v-btn v-on="on" v-bind="attrs" icon v-on:click="dialog=true">
           <v-icon>mdi-pencil</v-icon>
         </v-btn>
-        <div v-else>
-            <v-btn icon v-on:click="test">
-          <v-icon>mdi-content-save</v-icon>
-        </v-btn>
-        <v-btn icon v-on:click="test">
-          <v-icon>mdi-cancel</v-icon>
-        </v-btn>
-
-        </div>
+          </template>
+          <span>Modifier le donneur d'ordre de l'entreprise</span>
+        </v-tooltip>
       </v-card-title>
       <v-card-text>
         <v-text-field
-          v-model="donneurOrdreComputed.nom"
-          :readonly="!editMode"
+          v-model="nom"
+          readonly
           label="Nom"
           outlined
         ></v-text-field>
         <v-text-field
-          v-model="donneurOrdreComputed.prenom"
-          :readonly="!editMode"
+          v-model="prenom"
+          readonly
           label="Prénom"
           outlined
         ></v-text-field>
         <v-text-field
           type="email"
-          v-model="donneurOrdreComputed.email"
-          :readonly="!editMode"
+          v-model="email"
+          readonly
           label="Adresse email"
+          outlined
+        ></v-text-field>
+              <v-text-field
+          v-model="service_soitec"
+          readonly
+          label="Service"
           outlined
         ></v-text-field>
       </v-card-text>
@@ -44,7 +48,15 @@
 </template>
 
 <script>
+
+import entrepriseDonneurOrdreSelect from '~/components/entreprise/entrepriseDonneurOrdreSelect'
+import {updateDonneurDOrdre} from '~/graphql/mutations/entreprise/updateDonneurDOrdre'
+
 export default {
+components:{
+  entrepriseDonneurOrdreSelect
+},
+
   props: {
     donneurOrdre: {
       type: Object,
@@ -54,13 +66,29 @@ export default {
 
   data() {
     return {
-      editMode: false
+      dialog:false,
+      id:this.donneurOrdre.id,
+      nom: this.donneurOrdre.nom,
+      prenom: this.donneurOrdre.prenom,
+      email: this.donneurOrdre.email,
+      service_soitec: this.donneurOrdre.service_soitec.nomService
     };
   },
 
-  computed: {
-    donneurOrdreComputed() {
-      return { ...this.donneurOrdre };
+  methods:{
+    async changeDonneurDOrdre(donneurDOrdreId){
+      const response = await this.$api.request({
+        data:updateDonneurDOrdre({
+          entrepriseId:this.$route.params.id,
+          donneurDOrdreId
+        })
+      })
+      const newDO = response.data.updateEntreprise.entreprise.donneur_dordre
+      this.nom = newDO.nom
+      this.prenom = newDO.prenom
+      this.email = newDO.email
+      this.service_soitec = newDO.service_soitec.nomService
+      this.id = newDO.id
     }
   }
 };
