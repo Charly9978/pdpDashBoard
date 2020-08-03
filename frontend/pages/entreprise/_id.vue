@@ -28,14 +28,14 @@ export default {
     const response = await $api.request({
       data: entrepriseByIdQuery(route.params.id)
     });
-    const {nom,adresse,contact,pdpEnCours,pdpArchive,id,donneur_dordre} = response.data.entreprise;
+    const {nom,adresse,contact,pdpEnCours,pdpArchive,id,donneur_dordre,principal_activity} = response.data.entreprise;
     const statusPdps = response.data.statusPdps.map(status=>{return {...status}})
     store.commit('statusPdp/setStatus',statusPdps)
     return{
       pdpEnCours: pdpEnCours[0],
       pdpArchive: pdpArchive,
       donneurOrdre: donneur_dordre,
-      entreprise: {nom,adresse,contact,id}
+      entreprise: {nom,adresse,contact,id,principal_activity}
     }
   },
 

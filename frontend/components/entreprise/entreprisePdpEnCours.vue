@@ -4,7 +4,15 @@
       <v-card-title primary-title>
         Plan de prévention en cours
         <v-spacer></v-spacer>
-        <v-tooltip v-if="!editMode" bottom>
+        <v-tooltip v-if="!editMode && !createdModeStatut" bottom>
+          <template v-slot:activator="{ on, attrs }">
+        <v-btn v-on="on" v-bind="attrs" icon v-on:click="createdMode">     
+          <v-icon >mdi-new-box</v-icon>
+        </v-btn>
+          </template>
+          <span>Modifier le plan existant</span>
+        </v-tooltip>
+        <v-tooltip v-if="!editMode && !createdModeStatut" bottom>
           <template v-slot:activator="{ on, attrs }">
         <v-btn v-on="on" v-bind="attrs" icon v-on:click="editMode = true">     
           <v-icon >mdi-pencil</v-icon>
@@ -36,7 +44,7 @@
           <v-col cols="4">
             <v-text-field
               type="date"
-              :readonly="!editMode"
+              :readonly="!editMode && !createdModeStatut"
               v-model="$v.pdpEnCoursData.beginDate.$model"
               label="Date de signature"
               outlined
@@ -49,7 +57,7 @@
               v-model="$v.pdpEnCoursData.endDate.$model"
               label="Date de fin"
               outlined
-              :readonly="!editMode"
+              :readonly="!editMode && !createdModeStatut"
               :error-messages="errorEndDate"
               @change="updateStatus"
             ></v-text-field>
@@ -68,7 +76,7 @@
               v-model="$v.pdpEnCoursData.descriptifIntervention.$model"
               label="Description de l'intervention"
               outlined
-              :readonly="!editMode"
+              :readonly="!editMode && !createdModeStatut"
               :error-messages="errorRequired"
             ></v-textarea>
           </v-col>
@@ -77,7 +85,7 @@
               v-model="pdpEnCoursData.commentaires"
               label="Commentaire"
               outlined
-              :readonly="!editMode"
+              :readonly="!editMode && !createdModeStatut"
             ></v-textarea>
           </v-col>
           <v-col cols="6">
@@ -86,7 +94,7 @@
               v-model="pdpEnCoursData.urlDossierStockage"
               label="Lien vers le dossier de stockage"
               outlined
-              :readonly="!editMode"
+              :readonly="!editMode && !createdModeStatut"
             ></v-text-field>
           </v-col>
           <v-col cols="6">
@@ -94,7 +102,7 @@
               v-model="$v.pdpEnCoursData.urlPdf.$model"
               label="Liens vers le plan au format pdf"
               outlined
-              :readonly="!editMode"
+              :readonly="!editMode && !createdModeStatut"
               :error-messages="errorUrl"
             ></v-text-field>
           </v-col>
@@ -141,6 +149,7 @@ export default {
         urlPdf: this.pdpEnCours.urlPdf
       },
       editMode: false,
+      createdModeStatut: false
 
     };
   },
@@ -178,6 +187,7 @@ export default {
     cancel() {
       this.pdpEnCoursData = { ...this.pdpEnCours };
       this.editMode = false;
+      this.createdModeStatut = false
     },
 
     save() {
@@ -193,6 +203,13 @@ export default {
           console.log(e);
           this.cancel();
         });
+    },
+
+    createdMode(){
+      this.pdpEnCoursData.beginDate= undefined
+      this.pdpEnCoursData.endDate = undefined
+      this.pdpEnCoursData.commentaires= undefined
+      this.createdModeStatut= true
     }
   },
 

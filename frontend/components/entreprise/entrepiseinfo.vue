@@ -4,16 +4,31 @@
       <v-card-title primary-title>
         Entreprise
         <v-spacer></v-spacer>
-        <v-btn v-if="!editMode" icon v-on:click="editMode = true">
+        <v-tooltip v-if="!editMode" bottom>
+            <template v-slot:activator="{ on, attrs }">
+        <v-btn  v-on="on" v-bind="attrs" icon v-on:click="editMode = true">
           <v-icon>mdi-pencil</v-icon>
         </v-btn>
+            </template>
+            <span>Modifier les informations sur l'entreprise</span>
+        </v-tooltip>
         <div v-else>
-          <v-btn icon v-on:click="save">
-            <v-icon>mdi-content-save</v-icon>
-          </v-btn>
-          <v-btn icon v-on:click="cancel">
-            <v-icon>mdi-cancel</v-icon>
-          </v-btn>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn v-on="on" v-bind="attrs" icon v-on:click="save">
+                <v-icon>mdi-content-save</v-icon>
+              </v-btn>
+            </template>
+            <span>Enregistrer les modifications</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn v-on="on" v-bind="attrs" icon v-on:click="cancel">
+                <v-icon>mdi-close-circle</v-icon>
+              </v-btn>
+            </template>
+            <span>Annuler les modifications</span>
+          </v-tooltip>
         </div>
       </v-card-title>
       <v-card-text>
@@ -25,7 +40,7 @@
           :autofocus="editMode"
         ></v-text-field>
         <v-text-field
-          v-model="entrepriseDatas.nom"
+          v-model="entrepriseDatas.principal_activity"
           label="Activité principale"
           outlined
           hint="Pour les entreprises avec plusieurs activité. Ex: Applied polissage et Applied implant"
@@ -51,44 +66,45 @@
 </template>
 
 <script>
-import {updateEntrepriseMutation} from '@/graphql/mutations/updateEntrepriseMutation'
+import { updateEntrepriseMutation } from "@/graphql/mutations/updateEntrepriseMutation";
 
 export default {
   props: {
     entreprise: {
       required: true,
-      type: Object
-    }
+      type: Object,
+    },
   },
 
   data() {
     return {
       editMode: false,
-      entrepriseDatas: {...this.entreprise}
+      entrepriseDatas: { ...this.entreprise },
     };
   },
 
-  methods:{
-      
-      cancel(){
-          this.entrepriseDatas = {...this.entreprise} 
-          this.editMode = false
-      },
+  methods: {
+    cancel() {
+      this.entrepriseDatas = { ...this.entreprise };
+      this.editMode = false;
+    },
 
-      save(){
-        this.$api.request({
-          data: updateEntrepriseMutation({...this.entrepriseDatas})
+    save() {
+      console.log({...this.entrepriseDatas})
+      this.$api
+        .request({
+          data: updateEntrepriseMutation({ ...this.entrepriseDatas }),
         })
-        .then(()=>{ 
-          console.log("enregistrement réussi")
-          this.editMode = false
-          })
-        .catch((e)=>{
-          console.log(e)
-          this.cancel()
-          })
-      }
-  }
+        .then(() => {
+          console.log("enregistrement réussi");
+          this.editMode = false;
+        })
+        .catch((e) => {
+          console.log(e);
+          this.cancel();
+        });
+    },
+  },
 };
 </script>
 

@@ -5,6 +5,7 @@ export const entrepriseByIdQuery =(id) => {return{
       nom
       adresse
       contact
+      principal_activity
     	donneur_dordre{
         id
         nom

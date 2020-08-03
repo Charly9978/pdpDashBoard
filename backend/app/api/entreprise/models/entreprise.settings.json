@@ -24,6 +24,9 @@
     },
     "donneur_dordre": {
       "model": "donneur-d-ordre"
+    },
+    "principal_activity": {
+      "type": "text"
     }
   }
 }
