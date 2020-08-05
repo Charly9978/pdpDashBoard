@@ -33,14 +33,14 @@
       </v-card-title>
       <v-card-text>
         <v-text-field
-          v-model="entrepriseDatas.nom"
+          v-model="entreprise.nom"
           label="Nom de l'entreprise"
           outlined
           :readonly="!editMode"
           :autofocus="editMode"
         ></v-text-field>
         <v-text-field
-          v-model="entrepriseDatas.principal_activity"
+          v-model="entreprise.principal_activity"
           label="Activité principale"
           outlined
           hint="Pour les entreprises avec plusieurs activité. Ex: Applied polissage et Applied implant"
@@ -48,14 +48,14 @@
           :readonly="!editMode"
         ></v-text-field>
         <v-text-field
-          v-model="entrepriseDatas.adresse"
+          v-model="entreprise.adresse"
           label="Adresse"
           outlined
           :readonly="!editMode"
         ></v-text-field>
         <v-text-field
           type="email"
-          v-model="entrepriseDatas.contact"
+          v-model="entreprise.contact"
           label="Email du repésentant de l'entreprise"
           outlined
           :readonly="!editMode"
@@ -66,43 +66,40 @@
 </template>
 
 <script>
-import { updateEntrepriseMutation } from "@/graphql/mutations/updateEntrepriseMutation";
+import { updateEntrepriseMutation } from "@/graphql/mutations/entreprise/updateEntrepriseMutation";
 
 export default {
-  props: {
-    entreprise: {
-      required: true,
-      type: Object,
-    },
-  },
 
   data() {
     return {
       editMode: false,
-      entrepriseDatas: { ...this.entreprise },
+      entreprise:{
+        id:this.$store.state.entreprise.entreprise.id,
+        nom:this.$store.state.entreprise.entreprise.nom,
+        adresse: this.$store.state.entreprise.entreprise.adresse,
+        principal_activity: this.$store.state.entreprise.entreprise.principal_activity,
+        contact: this.$store.state.entreprise.entreprise.contact
+        } 
     };
   },
 
   methods: {
     cancel() {
-      this.entrepriseDatas = { ...this.entreprise };
+      this.entreprise.id =this.$store.state.entreprise.entreprise.id,
+        this.entreprise.nom =this.$store.state.entreprise.entreprise.nom,
+        this.entreprise.adresse = this.$store.state.entreprise.entreprise.adresse,
+        this.entreprise.principal_activity = this.$store.state.entreprise.entreprise.principal_activity,
+        this.entreprise.contact = this.$store.state.entreprise.entreprise.contact;
       this.editMode = false;
     },
 
-    save() {
-      console.log({...this.entrepriseDatas})
-      this.$api
-        .request({
-          data: updateEntrepriseMutation({ ...this.entrepriseDatas }),
-        })
-        .then(() => {
-          console.log("enregistrement réussi");
-          this.editMode = false;
-        })
-        .catch((e) => {
-          console.log(e);
-          this.cancel();
-        });
+    async save() {
+      this.$store.dispatch("entreprise/updateEntrepriseInfosById",this.entreprise)
+      .then(()=>this.editMode=false)
+      .catch((e)=>{
+        console.log(e)
+        this.cancel()
+      })
     },
   },
 };

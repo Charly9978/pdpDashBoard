@@ -13,7 +13,10 @@ export const updateDonneurDOrdre = (data)=>{
                   nom
                   prenom
                   email
-                  service_soitec{nomService}
+                  service_soitec{
+                    nomService
+                    id
+                  }
                 }
               }
             }

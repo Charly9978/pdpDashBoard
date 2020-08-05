@@ -1,11 +1,11 @@
 <template>
   <div>
     <v-row>
-     <entrepriseinfo :entreprise="entreprise" v-if="entreprise"></entrepriseinfo>
-      <entrepriseDonneurOrdre :donneurOrdre="donneurOrdre" v-if="donneurOrdre" ></entrepriseDonneurOrdre>
+     <entrepriseinfo></entrepriseinfo>
+      <entrepriseDonneurOrdre ></entrepriseDonneurOrdre>
     </v-row>
     <v-row>
-        <entreprisePdpEnCours :pdpEnCours="pdpEnCours" v-if="pdpEnCours"></entreprisePdpEnCours>
+        <!-- <entreprisePdpEnCours></entreprisePdpEnCours> -->
     </v-row>
   </div>
 </template>
@@ -14,7 +14,6 @@
 import entrepriseinfo from "~/components/entreprise/entrepiseinfo";
 import entrepriseDonneurOrdre from "~/components/entreprise/entrepriseDonneurOrdre";
 import entreprisePdpEnCours from "~/components/entreprise/entreprisePdpEnCours"
-import { entrepriseByIdQuery } from "~/graphql/queries/entrepriseByIdQuery";
 
 export default {
   components: {
@@ -23,20 +22,8 @@ export default {
     entreprisePdpEnCours
   },
 
-  async asyncData({store,$api,route}){
-
-    const response = await $api.request({
-      data: entrepriseByIdQuery(route.params.id)
-    });
-    const {nom,adresse,contact,pdpEnCours,pdpArchive,id,donneur_dordre,principal_activity} = response.data.entreprise;
-    const statusPdps = response.data.statusPdps.map(status=>{return {...status}})
-    store.commit('statusPdp/setStatus',statusPdps)
-    return{
-      pdpEnCours: pdpEnCours[0],
-      pdpArchive: pdpArchive,
-      donneurOrdre: donneur_dordre,
-      entreprise: {nom,adresse,contact,id,principal_activity}
-    }
+  async fetch({store,route}){
+    await store.dispatch('entreprise/fetchEntrepriseById',route.params.id)
   },
 
 };

@@ -1,7 +1,7 @@
 <template>
   <v-col cols="5">
     <v-dialog v-model="dialog" persistent max-width="600px">
-      <entrepriseDonneurOrdreSelect v-on:annuler="dialog=false" v-on:return-donneur-ordre="changeDonneurDOrdre"></entrepriseDonneurOrdreSelect>
+      <entrepriseDonneurOrdreSelect v-on:annuler="dialog=false"></entrepriseDonneurOrdreSelect>
     </v-dialog>
     <v-card>
       <v-card-title primary-title>
@@ -57,38 +57,31 @@ components:{
   entrepriseDonneurOrdreSelect
 },
 
-  props: {
-    donneurOrdre: {
-      type: Object,
-      required: true
-    }
-  },
-
   data() {
     return {
       dialog:false,
-      id:this.donneurOrdre.id,
-      nom: this.donneurOrdre.nom,
-      prenom: this.donneurOrdre.prenom,
-      email: this.donneurOrdre.email,
-      service_soitec: this.donneurOrdre.service_soitec.nomService
     };
   },
 
-  methods:{
-    async changeDonneurDOrdre(donneurDOrdreId){
-      const response = await this.$api.request({
-        data:updateDonneurDOrdre({
-          entrepriseId:this.$route.params.id,
-          donneurDOrdreId
-        })
-      })
-      const newDO = response.data.updateEntreprise.entreprise.donneur_dordre
-      this.nom = newDO.nom
-      this.prenom = newDO.prenom
-      this.email = newDO.email
-      this.service_soitec = newDO.service_soitec.nomService
-      this.id = newDO.id
+  computed:{
+    id(){
+      return this.$store.state.entreprise.entreprise.donneur_dordre.id
+    },
+
+    nom(){
+      return this.$store.state.entreprise.entreprise.donneur_dordre.nom
+    },
+
+    prenom(){
+      return this.$store.state.entreprise.entreprise.donneur_dordre.prenom
+    },
+
+    email(){
+      return this.$store.state.entreprise.entreprise.donneur_dordre.email
+    },
+
+    service_soitec(){
+      return this.$store.state.entreprise.entreprise.donneur_dordre.service_soitec.nomService
     }
   }
 };

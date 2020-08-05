@@ -6,20 +6,20 @@
           <v-row no-gutters>
             <v-col cols="11">
               <v-autocomplete
-                v-model="donneurDOrdre"
+                v-model="donneurDOrdreId"
                 :items="donneurDOrdres"
                 :item-text="item => item.prenom +' '+ item.nom"
                 label="Donneur d'ordre"
-                return-object
+                item-value="id"
                 outlined
                 clearable
               ></v-autocomplete>
             </v-col>
-            <v-col v-if="donneurDOrdre" cols="1">
+            <v-col v-if="donneurDOrdreId" cols="1">
               <v-card-actions>
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on, attrs }">
-                    <v-btn icon v-on="on" v-bind="attrs" v-on:click="returnDonneurDOrdre(donneurDOrdre.id)">
+                    <v-btn icon v-on="on" v-bind="attrs" v-on:click="returnDonneurDOrdre(donneurDOrdreId)">
                       <v-icon>mdi-content-save</v-icon>
                     </v-btn>
                   </template>
@@ -104,7 +104,7 @@ export default {
   data() {
     return {
       donneurDOrdres: [],
-      donneurDOrdre: undefined,
+      donneurDOrdreId: undefined,
       services: [],
       nom: "",
       prenom: "",
@@ -154,7 +154,10 @@ export default {
     },
 
     returnDonneurDOrdre(donneurDOrdreId) {
-      this.$emit('return-donneur-ordre',donneurDOrdreId)
+      this.$store.dispatch('entreprise/changeEntrepriseDonneurDOrdre',{
+        donneurDOrdreId,
+        entrepriseId: this.$route.params.id
+        })
       this.annuler()
 
     },
@@ -166,7 +169,7 @@ export default {
     },
     annuler(){
       this.cancel()
-      this.donneurDOrdre = undefined
+      this.donneurDOrdreId = undefined
       this.$emit('annuler')
     }
   },
