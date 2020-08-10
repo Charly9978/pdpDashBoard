@@ -5,7 +5,7 @@
       <entrepriseDonneurOrdre ></entrepriseDonneurOrdre>
     </v-row>
     <v-row>
-        <!-- <entreprisePdpEnCours></entreprisePdpEnCours> -->
+        <entreprisePdpEnCours v-if="isPdpEnCours"></entreprisePdpEnCours>
     </v-row>
   </div>
 </template>
@@ -20,6 +20,12 @@ export default {
     entrepriseinfo,
     entrepriseDonneurOrdre,
     entreprisePdpEnCours
+  },
+
+  computed:{
+    isPdpEnCours(){
+      return this.$store.getters['entreprise/pdpEnCours']
+    }
   },
 
   async fetch({store,route}){

@@ -1,6 +1,8 @@
 import {entrepriseByIdQuery} from '~/graphql/queries/entrepriseByIdQuery'
 import {updateEntrepriseMutation} from '~/graphql/mutations/entreprise/updateEntrepriseMutation'
 import {updateDonneurDOrdre} from '~/graphql/mutations/entreprise/updateDonneurDOrdre'
+import {updatePdpMutation} from '~/graphql/mutations/entreprise/updatePdpMutation'
+import {archivePdpMutation} from '~/graphql/mutations/entreprise/archivePdpMutation'
 
 export const state = ()=>({
     entreprise:{}
@@ -8,7 +10,7 @@ export const state = ()=>({
 })
 
 export const getters = {
-
+    pdpEnCours: state => state.entreprise.pdpEnCours[0]
 }
 
 export const mutations = {
@@ -25,7 +27,18 @@ export const mutations = {
 
     SetEntrepriseDonneurDOrdre(state,donneurDOrdre){
         state.entreprise.donneur_dordre = donneurDOrdre  
+    },
+
+    setPdpEnCours(state,pdp){
+        state.entreprise.pdpEnCours = [pdp]
+    },
+
+    setArchivePdp(state,pdp){
+        state.entreprise.pdpEnCours = []
+        state.entreprise.pdpArchive.push(pdp)
     }
+
+
 }
 
 export const actions = {
@@ -51,5 +64,19 @@ export const actions = {
             data:updateDonneurDOrdre({donneurDOrdreId,entrepriseId})
         })
         commit('SetEntrepriseDonneurDOrdre',{...response.data.updateEntreprise.entreprise.donneur_dordre})
+    },
+
+    async updateEntreprisePdpEnCours({commit},pdp){
+        const response = await this.$api.request({
+            data: updatePdpMutation(pdp)
+        })
+        commit('setPdpEnCours',{...response.data.updatePlanDePrevention.planDePrevention})
+    },
+
+    async archiveEntreprisePdpEnCours({commit},pdpId){
+        const response = await this.$api.request({
+            data: archivePdpMutation(pdpId)
+        })
+        commit('setArchivePdp',{...response.data.updatePlanDePrevention.planDePrevention})
     }
 }

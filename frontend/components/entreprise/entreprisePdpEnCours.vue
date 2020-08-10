@@ -6,19 +6,19 @@
         <v-spacer></v-spacer>
         <v-tooltip v-if="!editMode && !createdModeStatut" bottom>
           <template v-slot:activator="{ on, attrs }">
-        <v-btn v-on="on" v-bind="attrs" icon v-on:click="createdMode">     
-          <v-icon >mdi-new-box</v-icon>
+        <v-btn v-on="on" v-bind="attrs" icon v-on:click="editMode = true">     
+          <v-icon >mdi-pencil</v-icon>
         </v-btn>
           </template>
           <span>Modifier le plan existant</span>
         </v-tooltip>
         <v-tooltip v-if="!editMode && !createdModeStatut" bottom>
           <template v-slot:activator="{ on, attrs }">
-        <v-btn v-on="on" v-bind="attrs" icon v-on:click="editMode = true">     
-          <v-icon >mdi-pencil</v-icon>
+        <v-btn v-on="on" v-bind="attrs" icon v-on:click="archivage">     
+          <v-icon >mdi-archive</v-icon>
         </v-btn>
           </template>
-          <span>Modifier le plan existant</span>
+          <span>Archiver le plan existant</span>
         </v-tooltip>
         <div v-else>
           <v-tooltip bottom>
@@ -114,7 +114,7 @@
 
 <script>
 import { endDateOlderThanBegin,lessThan12Month, getStatusId } from "~/utils/moment";
-import {updatePdpMutation} from '~/graphql/mutations/updatePdpMutation'
+import {updatePdpMutation} from '~/graphql/mutations/entreprise/updatePdpMutation'
 import {
   required,
   url,
@@ -125,29 +125,11 @@ import {
 
 
 export default {
-  props: {
-    pdpEnCours: {
-      required: true,
-      type: Object
-    }
-  },
+
 
   data() {
     return {
-      pdpEnCoursData: {
-        id: this.pdpEnCours.id,
-        endDate: this.pdpEnCours.endDate,
-        beginDate: this.pdpEnCours.beginDate,
-        status_pdp: {
-          text: this.pdpEnCours.status_pdp.text,
-          color: this.pdpEnCours.status_pdp.color,
-          id: this.pdpEnCours.status_pdp.id
-        },
-        descriptifIntervention: this.pdpEnCours.descriptifIntervention,
-        commentaires: this.pdpEnCours.commentaires,
-        urlDossierStockage: this.pdpEnCours.urlDossierStockage,
-        urlPdf: this.pdpEnCours.urlPdf
-      },
+      pdpEnCoursData: {...this.$store.getters['entreprise/pdpEnCours']},
       editMode: false,
       createdModeStatut: false
 
@@ -176,6 +158,10 @@ export default {
 
   methods: {
 
+    archivage(){
+      this.$store.dispatch('entreprise/archiveEntreprisePdpEnCours',this.pdpEnCoursData.id)
+    },
+
     updateStatus(){
       const statusId = getStatusId(this.pdpEnCoursData.endDate)
       const status = this.$store.getters["statusPdp/getStatusById"](statusId)
@@ -185,16 +171,13 @@ export default {
     },
 
     cancel() {
-      this.pdpEnCoursData = { ...this.pdpEnCours };
+      this.pdpEnCoursData = { ...this.$store.getters['entreprise/pdpEnCours'] };
       this.editMode = false;
       this.createdModeStatut = false
     },
 
     save() {
-      this.$api
-        .request({
-          data: updatePdpMutation({ ...this.pdpEnCoursData })
-        })
+      this.$store.dispatch('entreprise/updateEntreprisePdpEnCours',this.pdpEnCoursData)
         .then(() => {
           console.log("enregistrement réussi");
           this.editMode = false;
