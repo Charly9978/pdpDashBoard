@@ -7,6 +7,9 @@
     <v-row>
         <entreprisePdpEnCours v-if="isPdpEnCours"></entreprisePdpEnCours>
     </v-row>
+    <v-row>
+        <entreprisePdpArchive v-if="isPdpArchive"></entreprisePdpArchive>
+    </v-row>
   </div>
 </template>
 
@@ -14,17 +17,22 @@
 import entrepriseinfo from "~/components/entreprise/entrepiseinfo";
 import entrepriseDonneurOrdre from "~/components/entreprise/entrepriseDonneurOrdre";
 import entreprisePdpEnCours from "~/components/entreprise/entreprisePdpEnCours"
+import entreprisePdpArchive from "~/components/entreprise/entreprisePdpArchive"
 
 export default {
   components: {
     entrepriseinfo,
     entrepriseDonneurOrdre,
-    entreprisePdpEnCours
+    entreprisePdpEnCours,
+    entreprisePdpArchive
   },
 
   computed:{
     isPdpEnCours(){
       return this.$store.getters['entreprise/pdpEnCours']
+    },
+    isPdpArchive(){
+      return this.$store.getters['entreprise/pdpArchive'].length>0
     }
   },
 

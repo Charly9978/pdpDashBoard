@@ -1,15 +1,15 @@
 <template>
   <div>
-      <entrepriseDonneurOrdreSelect/>
+      <entreprisePdpArchive/>
   </div>
 </template>
 
 <script>
-import entrepriseDonneurOrdreSelect from '@/components/entreprise/entrepriseDonneurOrdreSelect'
+import entreprisePdpArchive from '@/components/entreprise/entreprisePdpArchive'
 
 export default {
     components:{
-      entrepriseDonneurOrdreSelect
+      entreprisePdpArchive
     }
 
     

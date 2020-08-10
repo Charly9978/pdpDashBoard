@@ -10,7 +10,8 @@ export const state = ()=>({
 })
 
 export const getters = {
-    pdpEnCours: state => state.entreprise.pdpEnCours[0]
+    pdpEnCours: state => state.entreprise.pdpEnCours[0],
+    pdpArchive: state => state.entreprise.pdpArchive
 }
 
 export const mutations = {
