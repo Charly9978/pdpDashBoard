@@ -36,7 +36,7 @@ export const entrepriseByIdQuery =(id) => {return{
         urlDossierStockage
         urlPdf     
       }
-      pdpArchive:plan_de_preventions(where:{Archiver: true}){
+      pdpArchive:plan_de_preventions(where:{Archiver: true},sort:"beginDate:asc"){
       	id
         beginDate
         urlPdf
