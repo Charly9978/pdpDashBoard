@@ -1,10 +1,10 @@
-export const archivePdpMutation = (pdpId) => {
+export const archivePdpMutation = ({id,archivage}) => {
     return{
         query:`mutation {
             updatePlanDePrevention(
               input: {
-                where: { id: "${pdpId}" }
-                data: { Archiver: true }
+                where: { id: "${id}" }
+                data: { Archiver: ${archivage} }
               }
             ) {
               planDePrevention {
@@ -18,6 +18,14 @@ export const archivePdpMutation = (pdpId) => {
                     nomService
                   }
                 }
+                status_pdp{
+                  id
+                  text
+                  color
+                }
+                endDate
+                commentaires
+                descriptifIntervention
               }
             }
           }`

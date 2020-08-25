@@ -11,7 +11,9 @@ export const state = ()=>({
 
 export const getters = {
     pdpEnCours: state => state.entreprise.pdpEnCours[0],
-    pdpArchive: state => state.entreprise.pdpArchive
+    pdpArchive: state => state.entreprise.pdpArchive,
+    isPdpEnCours: state => state.entreprise.pdpEnCours[0]!=undefined?true:false,
+    idOfLastPdpArchive: state =>[...state.entreprise.pdpArchive].reverse()[0].id
 }
 
 export const mutations = {
@@ -37,6 +39,10 @@ export const mutations = {
     setArchivePdp(state,pdp){
         state.entreprise.pdpEnCours = []
         state.entreprise.pdpArchive.push(pdp)
+    },
+
+    removeLastPdpArchive(state){
+        state.entreprise.pdpArchive.pop()
     }
 
 
@@ -76,8 +82,22 @@ export const actions = {
 
     async archiveEntreprisePdpEnCours({commit},pdpId){
         const response = await this.$api.request({
-            data: archivePdpMutation(pdpId)
+            data: archivePdpMutation({
+                id:pdpId,
+                archivage: true
+            })
         })
         commit('setArchivePdp',{...response.data.updatePlanDePrevention.planDePrevention})
+    },
+
+    async reactivePdp({commit},pdpId){
+        const response = await this.$api.request({
+            data: archivePdpMutation({
+                id:pdpId,
+                archivage: false
+            })
+        }) 
+        commit('setPdpEnCours',{...response.data.updatePlanDePrevention.planDePrevention})
+        commit('removeLastPdpArchive')
     }
 }
