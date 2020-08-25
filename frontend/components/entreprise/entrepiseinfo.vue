@@ -60,6 +60,10 @@
           outlined
           :readonly="!editMode"
         ></v-text-field>
+      <v-card-actions  class="justify-center" >
+     
+        <v-btn color="info">Enregistrer un nouveau plan de prévention</v-btn>
+      </v-card-actions>
       </v-card-text>
     </v-card>
   </v-col>
