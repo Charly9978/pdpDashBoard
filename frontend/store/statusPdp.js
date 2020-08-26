@@ -13,6 +13,7 @@ export const getters = {
 export const mutations =  {
     setStatus(state,status){
         state.status = status
+
     }
 }
 

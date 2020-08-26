@@ -53,8 +53,9 @@ export const actions = {
         const response = await this.$api.request({
             data: entrepriseByIdQuery(entrepriseId)
         })
+        console.log("statusPdp",response.data.statusPdps)
         commit('setEntreprise', {...response.data.entreprise})
-        commit('statusPdp/setStatus',{...response.data.statusPdps},{root:true})
+        commit('statusPdp/setStatus',[...response.data.statusPdps],{root:true})
     },
 
     async updateEntrepriseInfosById({commit},entreprise){

@@ -41,6 +41,7 @@ export const entrepriseByIdQuery =(id) => {return{
         beginDate
         urlPdf
         urlDossierStockage
+        descriptifIntervention
       	donneur_dordre{
           nom
           service_soitec{nomService}

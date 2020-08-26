@@ -1,6 +1,7 @@
 <template>
   <v-col cols="7">
     <v-card>
+      <validation :openValidation='openValidation' :text='text' v-on:no="openValidation=false"></validation>
       <v-card-title primary-title>
         Entreprise
         <v-spacer></v-spacer>
@@ -60,9 +61,8 @@
           outlined
           :readonly="!editMode"
         ></v-text-field>
-      <v-card-actions  class="justify-center" >
-     
-        <v-btn color="info">Enregistrer un nouveau plan de prévention</v-btn>
+      <v-card-actions  class="justify-center" > 
+        <v-btn color="info" v-on:click.prevent="openValidation=true">Enregistrer un nouveau plan de prévention</v-btn>
       </v-card-actions>
       </v-card-text>
     </v-card>
@@ -71,8 +71,13 @@
 
 <script>
 import { updateEntrepriseMutation } from "@/graphql/mutations/entreprise/updateEntrepriseMutation";
+import validation from '~/components/utilities/Validation'
 
 export default {
+
+  components:{
+    validation
+  },
 
   data() {
     return {
@@ -83,7 +88,9 @@ export default {
         adresse: this.$store.state.entreprise.entreprise.adresse,
         principal_activity: this.$store.state.entreprise.entreprise.principal_activity,
         contact: this.$store.state.entreprise.entreprise.contact
-        } 
+        },
+      openValidation:false,
+      text: "Attention, si un plan de prévrention est en cours celui-ci va être archivé. Voulez-vous quand même créer un nouveau plan?"
     };
   },
 
@@ -105,6 +112,9 @@ export default {
         this.cancel()
       })
     },
+    test(){
+      console.log("coucou")
+    }
   },
 };
 </script>

@@ -1,16 +1,19 @@
 <template>
   <div>
-      <entreprisePdpArchive/>
+      <entrepriseNewPdpCreation/>
   </div>
 </template>
 
 <script>
-import entreprisePdpArchive from '@/components/entreprise/entreprisePdpArchive'
+import entrepriseNewPdpCreation from '@/components/entreprise/entrepriseNewPdpCreation'
 
 export default {
     components:{
-      entreprisePdpArchive
-    }
+      entrepriseNewPdpCreation
+    },
+    async fetch({store}){
+    await store.dispatch('entreprise/fetchEntrepriseById',"5f08c58ab3e7b10117a6e602")
+  },
 
     
 
