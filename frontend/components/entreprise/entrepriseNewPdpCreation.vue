@@ -1,4 +1,11 @@
 <template>
+<v-dialog
+  v-model="openForm"
+  persistent
+  max-width="850px"
+  transition="dialog-transition"
+>
+  
   <v-col cols="12">
     <v-card>
       <v-card-title primary-title>
@@ -10,7 +17,7 @@
             <v-icon >mdi-content-save</v-icon>
           </v-btn>
             </template>
-          <span>Enregistrer les modifications</span>
+          <span>Enregistrer le nouveau plan</span>
         </v-tooltip>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -18,7 +25,7 @@
             <v-icon>mdi-cancel</v-icon>
           </v-btn>
             </template>
-          <span>Annuler les modifications</span>
+          <span>Annuler l'enregistrement</span>
         </v-tooltip>
       </v-card-title>
       <v-card-text>
@@ -86,6 +93,7 @@
       </v-card-text>
     </v-card>
   </v-col>
+  </v-dialog>
 </template>
 
 <script>
@@ -101,6 +109,13 @@ import {
 
 export default {
 
+  props:{
+    openForm:{
+      type: Boolean,
+      required: true
+    }
+  },
+
 
   data() {
     return {
@@ -108,7 +123,7 @@ export default {
         beginDate:"",
         endDate:"",
         Archiver:false,
-        descriptifIntervention:this.$store.getters['entreprise/isPdpEnCours']?[...this.$store.state.entreprise.entreprise.pdpEnCours][0].descriptifIntervention:[...this.$store.state.entreprise.entreprise.pdpArchive].reverse()[0].descriptifIntervention,// a récupérer
+        descriptifIntervention:this.$store.getters['entreprise/isPdpEnCours']?[...this.$store.state.entreprise.entreprise.pdpEnCours][0].descriptifIntervention:[...this.$store.state.entreprise.entreprise.pdpArchive].reverse()[0].descriptifIntervention,
         urlDossierStockage:"",
         entreprise:this.$store.state.entreprise.entreprise.id,
         status_pdp:{},
@@ -116,7 +131,6 @@ export default {
         urlPdf:"",
         donneur_dordre:this.$store.state.entreprise.entreprise.donneur_dordre.id
       },
-
     };
   },
 
@@ -145,7 +159,6 @@ export default {
     updateStatus(){
       const statusId = getStatusId(this.newPdp.endDate)
       const status = this.$store.getters["statusPdp/getStatusById"](statusId)
-      console.log("status",{...status})
       this.$set(this.newPdp.status_pdp,'text',{...status}.text)
       this.$set(this.newPdp.status_pdp,'color',{...status}.color)
       this.$set(this.newPdp.status_pdp,'id',{...status}.id)
@@ -156,7 +169,7 @@ export default {
         beginDate:"",
         endDate:"",
         Archiver:false,
-        descriptifIntervention:"",
+        descriptifIntervention:this.$store.getters['entreprise/isPdpEnCours']?[...this.$store.state.entreprise.entreprise.pdpEnCours][0].descriptifIntervention:[...this.$store.state.entreprise.entreprise.pdpArchive].reverse()[0].descriptifIntervention,
         urlDossierStockage:"",
         entreprise:this.$store.state.entreprise.entreprise.id,
         status_pdp:{},
@@ -164,12 +177,14 @@ export default {
         urlPdf:"",
         donneur_dordre:this.$store.state.entreprise.entreprise.donneur_dordre.id
       };
+      this.$emit('close')
     },
 
     save() {
-      this.$store.dispatch('entreprise/updateEntreprisePdpEnCours',this.newPdp)
+      this.$store.dispatch('entreprise/creatNewPdp',this.newPdp)
         .then(() => {
           console.log("enregistrement réussi");
+          this.$emit('close')
         })
         .catch(e => {
           console.log(e);

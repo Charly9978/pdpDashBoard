@@ -1,7 +1,8 @@
 <template>
   <v-col cols="7">
     <v-card>
-      <validation :openValidation='openValidation' :text='text' v-on:no="openValidation=false"></validation>
+      <validation :openValidation='openValidation' :text='text' v-on:no="openValidation=false" v-on:yes='activeForm'></validation>
+      <entrepriseNewPdpCreation :openForm='openForm' v-on:close='openForm=false'></entrepriseNewPdpCreation>
       <v-card-title primary-title>
         Entreprise
         <v-spacer></v-spacer>
@@ -70,13 +71,14 @@
 </template>
 
 <script>
-import { updateEntrepriseMutation } from "@/graphql/mutations/entreprise/updateEntrepriseMutation";
 import validation from '~/components/utilities/Validation'
+import entrepriseNewPdpCreation from '~/components/entreprise/entrepriseNewPdpCreation'
 
 export default {
 
   components:{
-    validation
+    validation,
+    entrepriseNewPdpCreation
   },
 
   data() {
@@ -90,7 +92,8 @@ export default {
         contact: this.$store.state.entreprise.entreprise.contact
         },
       openValidation:false,
-      text: "Attention, si un plan de prévrention est en cours celui-ci va être archivé. Voulez-vous quand même créer un nouveau plan?"
+      text: "Attention, si un plan de prévrention est en cours celui-ci va être archivé. Voulez-vous quand même créer un nouveau plan?",
+      openForm: false
     };
   },
 
@@ -114,6 +117,11 @@ export default {
     },
     test(){
       console.log("coucou")
+    },
+
+    activeForm(){
+      this.openValidation = false
+      this.openForm = true
     }
   },
 };

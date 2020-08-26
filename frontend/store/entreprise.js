@@ -3,6 +3,7 @@ import {updateEntrepriseMutation} from '~/graphql/mutations/entreprise/updateEnt
 import {updateDonneurDOrdre} from '~/graphql/mutations/entreprise/updateDonneurDOrdre'
 import {updatePdpMutation} from '~/graphql/mutations/entreprise/updatePdpMutation'
 import {archivePdpMutation} from '~/graphql/mutations/entreprise/archivePdpMutation'
+import {createPdp} from '~/graphql/mutations/entreprise/createPdp'
 
 export const state = ()=>({
     entreprise:{}
@@ -100,5 +101,17 @@ export const actions = {
         }) 
         commit('setPdpEnCours',{...response.data.updatePlanDePrevention.planDePrevention})
         commit('removeLastPdpArchive')
+    },
+
+    async creatNewPdp({commit,getters,dispatch},pdp){
+        const response = await this.$api.request({
+            data:createPdp(pdp)
+        })
+        if (getters.isPdpEnCours){
+            const idPdPToArchive = getters.pdpEnCours.id
+            console.log('idPdp',idPdPToArchive)
+            await dispatch('archiveEntreprisePdpEnCours',idPdPToArchive)
+        }
+        commit('setPdpEnCours',{...response.data.createPlanDePrevention.planDePrevention})
     }
 }
