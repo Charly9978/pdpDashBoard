@@ -1,19 +1,16 @@
 <template>
   <div>
-      <entrepriseNewPdpCreation/>
+      <login/>
   </div>
 </template>
 
 <script>
-import entrepriseNewPdpCreation from '@/components/entreprise/entrepriseNewPdpCreation'
+import login from '@/components/login'
 
 export default {
     components:{
-      entrepriseNewPdpCreation
+      login
     },
-    async fetch({store}){
-    await store.dispatch('entreprise/fetchEntrepriseById',"5f08c58ab3e7b10117a6e602")
-  },
 
     
 

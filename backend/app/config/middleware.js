@@ -1,4 +1,5 @@
 module.exports = {
+  
     load: {
       before: ['sentry','cron'],
     },
@@ -7,5 +8,8 @@ module.exports = {
         sentry: {
           enabled: true,
         },
+/*         cors:{
+          origin: ['http://localhost:3000']
+        } */
       }
   };
