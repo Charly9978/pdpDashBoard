@@ -2,9 +2,10 @@
       <v-app-bar
       app
       color="blue darken-3"
+      clipped-left
       dark
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="openMenu"></v-app-bar-nav-icon>
       <v-toolbar-title
         style="width: 300px"
         class="ml-0 pl-4"
@@ -48,6 +49,13 @@ data(){
     return {
         drawer: false
     }
+},
+
+methods:{
+  openMenu(){
+    this.drawer=!this.drawer
+    this.$emit('open-menu',this.drawer)
+  }
 }
 }
 </script>
