@@ -38,7 +38,8 @@ export default {
   */
   plugins: [
     '@/plugins/axios.js',
-    '@/plugins/vuelidate.js'
+    '@/plugins/vuelidate.js',
+    '@/plugins/auth.js'
   ],
   /*
   ** Auto import components

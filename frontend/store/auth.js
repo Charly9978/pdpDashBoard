@@ -4,10 +4,6 @@ export const state = ()=>({
 
 export const getters = {
 
-    getUser(state){
-        return state.user
-    },
-
     isLogin(state){
         return !state.user?false:true
     }
