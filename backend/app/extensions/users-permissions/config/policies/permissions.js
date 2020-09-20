@@ -3,10 +3,12 @@ const _ = require('lodash');
 module.exports = async (ctx, next) => {
   let role;
 
-  if(ctx.request && ctx.request.header){
+  console.log('permissions')
+
+  if(ctx.request && ctx.request.header && !ctx.request.header.authorization) {
       const token = ctx.cookies.get('token')
-      if(token){
-          ctx.request.header.authorization = `Bearer ${token}`
+      if(token) {
+        ctx.request.header.authorization = `Bearer ${token}`
       }
   }
 
