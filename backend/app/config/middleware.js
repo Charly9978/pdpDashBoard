@@ -8,8 +8,8 @@ module.exports = {
         sentry: {
           enabled: true,
         },
-/*         cors:{
-          origin: ['http://localhost:3000']
-        } */
+        cors:{
+          origin: ['http://localhost:3000', 'http://localhost:1337']
+        } 
       }
   };

@@ -12,9 +12,18 @@ services:
     links:
       - mongo:mongo
     volumes:
-      - ./app:/srv/app
+      - ./backend/app:/srv/app
     ports:
       - '1337:1337'
+
+  nuxt:
+    build: 
+      context: frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/var/www/nuxt
+    ports:
+      - '3000:3000'
   
   mongo:
     image: mongo
@@ -22,6 +31,6 @@ services:
       MONGO_INITDB_ROOT_USERNAME: strapi
       MONGO_INITDB_ROOT_PASSWORD: strapi
     volumes:
-      - ./data/db:/data/db
+      - ./backend/data/db:/data/db
     ports:
       - '27017:27017'

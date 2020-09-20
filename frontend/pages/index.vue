@@ -27,8 +27,9 @@ export default {
   async created(){
     const response = await this.$api.request({
       data: plansDePreventionsQuery
-      })
-    this.planDePreventions = response.data.planDePreventions
+      }) 
+
+     this.planDePreventions = response.data.planDePreventions
   }
 
 }
