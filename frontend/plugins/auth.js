@@ -1,5 +1,4 @@
 export default async (context, inject) => {
-    console.log('context',context.store)
     
     class Auth{
 
@@ -12,12 +11,14 @@ export default async (context, inject) => {
         }
 
         set user(user){
-            context.store.commit['auth/SETUSER'](user)
+            context.store.commit('auth/SETUSER',user)
         }
+
         async fetchUser(){
             try {
                 const resp = await context.app.$axios.get('http://localhost:1337/users/me',{withCredentials: true})
-                this.user(resp.data)
+                console.log('resp',resp)
+                this.user = resp.data
                 console.log("connection ok")
             } catch (error) {
                 console.log('problème de connection')
@@ -25,7 +26,29 @@ export default async (context, inject) => {
             }
         }
     
-        login(accessToken){
+        async login(accessToken){
+            try {
+                const res = await $axios.get(`http://localhost:1337/auth/google/callback?access_token=${accessToken}`, {
+                  withCredentials: true
+                })
+          
+                await new Promise((resolve) => {
+                  console.log('auth',$auth)
+                  $auth.user = res.data.user
+                  console.log('user', $auth.user)
+          
+                  resolve(redirect('/'))
+                })
+              } catch (e) {
+                if (e.response && e.response.data.statusCode === 401) {
+                  error({
+                    statusCode: 401,
+                    message: e.response.data.message
+                  })
+                } else {
+                  error()
+                }
+              }
     
         }
     
@@ -47,8 +70,12 @@ export default async (context, inject) => {
 
     const auth = new Auth()
 
+    console.log('pluginFetchUser')
+
     await auth.fetchUser()
     
+    console.log('plugingBeforeInject')
+
     inject('auth', auth)
   }
   

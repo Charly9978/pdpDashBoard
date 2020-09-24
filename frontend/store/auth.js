@@ -1,5 +1,5 @@
 export const state = ()=>({
-    user:{}
+    user:undefined
 })
 
 export const getters = {
