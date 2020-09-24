@@ -22,20 +22,19 @@
         class="hidden-sm-and-down"
       ></v-text-field>
       <v-spacer></v-spacer>
-      <v-btn
-        icon
-        large
-      >
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
         <v-avatar
+          v-bind="attrs"
+          v-on="on"
           size="32px"
-          item
+          color="red lighten-2"
         >
-          <v-img
-            src="https://cdn.vuetifyjs.com/images/logos/logo.svg"
-            alt="Vuetify"
-          ></v-img>
+          <span class="white--text">{{initials}}</span>
         </v-avatar>
-      </v-btn>
+      </template>
+      <span>{{email}}</span>
+    </v-tooltip>
       <v-btn icon>
         <v-icon>mdi-power</v-icon>
       </v-btn>
@@ -47,7 +46,9 @@ export default {
 
 data(){
     return {
-        drawer: false
+        drawer: false,
+        initials: this.$store.getters['auth/initials'],
+        email: this.$store.state.auth.user.email
     }
 },
 
