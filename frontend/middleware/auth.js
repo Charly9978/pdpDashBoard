@@ -2,11 +2,15 @@ export default async function ({
   route,
   $auth,
   redirect,
-  query
+  query,
+  error
 }) {
 
   console.log('route', route.path)
 
+  if (route.path === '/login') {
+    return $auth.connectToGoogle()
+  }
 
   if (route.path === '/logout') {
     return
@@ -20,18 +24,16 @@ export default async function ({
     const accesToken = query.access_token
 
     try {
-      await $auth.login(accesToken)   
-    } catch (error) {
-      console.log('erreur from middle')
+      await $auth.login(accesToken)
+      redirect('/')  
+    } catch (e) {
+      console.log(e.response)
+      return error({
+        statusCode:e.response.status,
+        message: e.response.data.message
+      })
     }
   }
-
-
-
-  if (route.path === '/login') {
-    return $auth.connectToGoogle()
-  }
-
 
 
   if (!$auth.isLogin) {

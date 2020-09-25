@@ -15,6 +15,8 @@ import navBar from '~/components/navigation/navBar'
 import navDrawer from '~/components/navigation/navDrawer'
 
 export default {
+
+  middleware: 'auth',
   components:{
     navBar,
     navDrawer

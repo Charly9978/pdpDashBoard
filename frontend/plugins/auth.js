@@ -34,20 +34,10 @@ export default async ({store, app, redirect, error }, inject) => {
                   withCredentials: true
                 })
                 console.log('res', res)
-          
-                await new Promise((resolve) => {
-                  this.user = res.data.user        
-                  resolve(redirect('/'))
-                })
+                this.user = res.data.user        
               } catch (e) {
-                if (e.response && e.response.data.statusCode === 401) {
-                  error({
-                    statusCode: 401,
-                    message: e.response.data.message
-                  })
-                } else {
-                  error()
-                }
+                console.log('errorfromplugin', e)
+                throw e
               }
     
         }

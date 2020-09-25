@@ -152,12 +152,18 @@ module.exports = {
 
       // Connect the user with the third-party provider.
       let user, error;
+      console.log('test')
       try {
         [user, error] = await strapi.plugins['users-permissions'].services.providers.connect(
           provider,
           ctx.query
         );
       } catch ([user, error]) {
+        console.log('error', error)
+        if(error.message && error.message === 'Vous ne faites pas parti de la société Soitec'){
+          console.log('unauth')
+          return ctx.unauthorized('Vous ne faites pas parti de la société Soitec')
+        }
         return ctx.badRequest(null, error === 'array' ? error[0] : error);
       }
 

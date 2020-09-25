@@ -53,9 +53,7 @@ export default {
     '@nuxtjs/vuetify',
   ],
 
-  router: {
-    middleware: 'auth'
-  },
+
   /*
   ** Nuxt.js modules
   */
