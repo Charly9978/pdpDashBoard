@@ -7,6 +7,8 @@
 
 module.exports = {
     async logout(ctx){
+
+        console.log('debut de logout')
         ctx.cookies.set('token', null)
         ctx.send({
             authorized: true,

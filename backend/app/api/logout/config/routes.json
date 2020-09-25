@@ -1,7 +1,7 @@
 {
     "routes": [
       {
-        "method": "POST",
+        "method": "GET",
         "path": "/logout",
         "handler": "Logout.logout",
         "config": {

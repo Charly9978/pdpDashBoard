@@ -1,42 +1,42 @@
-export default async (context, inject) => {
+export default async ({store, app, redirect, error }, inject) => {
     
     class Auth{
 
         get user(){
-            return context.store.state.auth.user
+            return store.state.auth.user
         }
         
         get isLogin(){
-           return context.store.getters['auth/isLogin'] 
+           return store.getters['auth/isLogin'] 
         }
 
         set user(user){
-            context.store.commit('auth/SETUSER',user)
+            store.commit('auth/SETUSER',user)
         }
 
         async fetchUser(){
             try {
-                const resp = await context.app.$axios.get('http://localhost:1337/users/me',{withCredentials: true})
+                const resp = await app.$axios.get('http://localhost:1337/users/me',{withCredentials: true})
                 console.log('resp',resp)
                 this.user = resp.data
                 console.log("connection ok")
             } catch (error) {
                 console.log('problème de connection')
-                context.redirect('/login')
+                redirect('/login')
             }
         }
     
         async login(accessToken){
             try {
-                const res = await $axios.get(`http://localhost:1337/auth/google/callback?access_token=${accessToken}`, {
+              console.log('envoie requet auth/google/callback')
+  
+                const res = await app.$axios.get(`http://localhost:1337/auth/google/callback?access_token=${accessToken}`, {
                   withCredentials: true
                 })
+                console.log('res', res)
           
                 await new Promise((resolve) => {
-                  console.log('auth',$auth)
-                  $auth.user = res.data.user
-                  console.log('user', $auth.user)
-          
+                  this.user = res.data.user        
                   resolve(redirect('/'))
                 })
               } catch (e) {
@@ -53,13 +53,13 @@ export default async (context, inject) => {
         }
     
         connectToGoogle(){
-            context.redirect("http://localhost:1337/connect/google")
+          redirect("http://localhost:1337/connect/google")
         }
     
         async logout(){
-            this.user({})
-            await context.app.$axios.get('http://localhost:1337/logout',{withCredentials: true})
-            context.redirect('/logout')
+            this.user = undefined
+            await app.$axios.get('http://localhost:1337/logout',{withCredentials: true})
+            redirect('/logout')
     
         }
 

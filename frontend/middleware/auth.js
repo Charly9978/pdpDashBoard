@@ -5,6 +5,8 @@ export default async function ({
   query
 }) {
 
+  console.log('route', route.path)
+
 
   if (route.path === '/logout') {
     return
@@ -14,10 +16,11 @@ export default async function ({
 
   if (route.path === '/connect/google/redirect') {
 
+    console.log('token in route',query.access_token)
     const accesToken = query.access_token
 
     try {
-      $auth.login(accesToken)   
+      await $auth.login(accesToken)   
     } catch (error) {
       console.log('erreur from middle')
     }

@@ -10,8 +10,6 @@ module.exports = strapi => {
       initialize() {
         strapi.app.use(async (ctx, next) => {
           try {
-              console.log("coucou les gens")
-            new Error('creation erreur')
             await next();
           } catch (error) {
             Sentry.captureException(error);

@@ -35,9 +35,18 @@
       </template>
       <span>{{email}}</span>
     </v-tooltip>
-      <v-btn icon>
+    <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+      <v-btn 
+      icon
+      v-on="on"
+      v-bind="attrs"
+      @click="logout">
         <v-icon>mdi-power</v-icon>
       </v-btn>
+        </template>
+        <span>Déconnexion</span>
+    </v-tooltip>
     </v-app-bar>
 </template>
 
@@ -47,16 +56,33 @@ export default {
 data(){
     return {
         drawer: false,
-        initials: this.$store.getters['auth/initials'],
-        email: this.$store.state.auth.user.email
+//        initials: this.$store.getters['auth/initials'],
+//        email: this.$store.state.auth.user.email
     }
+},
+
+computed:{
+
+  initials(){
+    return this.$store.getters['auth/initials']
+  },
+
+  email(){
+    return this.$store.state.auth.user?this.$store.state.auth.user.email:null
+  }
 },
 
 methods:{
   openMenu(){
     this.drawer=!this.drawer
     this.$emit('open-menu',this.drawer)
+  },
+  
+  logout(){
+    this.$auth.logout()
   }
+
+
 }
 }
 </script>

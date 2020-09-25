@@ -19,6 +19,7 @@ const formatError = error => [
 
 module.exports = {
   async callback(ctx) {
+    console.log('debut Callback')
     const provider = ctx.params.provider || 'local';
     const params = ctx.request.body;
 
@@ -167,6 +168,8 @@ module.exports = {
       const jwtToken = strapi.plugins['users-permissions'].services.jwt.issue({
         id: user.id,
       })
+
+      console.log("creation du cookie")
 
       ctx.cookies.set('token',jwtToken,{
         httpOnly: true,
