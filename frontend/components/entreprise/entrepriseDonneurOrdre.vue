@@ -7,7 +7,7 @@
       <v-card-title primary-title>
         Donneur d'ordre
         <v-spacer></v-spacer>
-        <v-tooltip bottom>
+        <v-tooltip bottom v-if="$auth.isAdmin">
           <template v-slot:activator="{ on, attrs }">
         <v-btn v-on="on" v-bind="attrs" icon v-on:click="dialog=true">
           <v-icon>mdi-pencil</v-icon>

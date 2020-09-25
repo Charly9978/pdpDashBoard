@@ -4,6 +4,7 @@
       <v-card-title primary-title>
         Plan de prévention en cours
         <v-spacer></v-spacer>
+        <div v-if="$auth.isAdmin">
         <v-tooltip v-if="!editMode && !createdModeStatut" bottom>
           <template v-slot:activator="{ on, attrs }">
         <v-btn v-on="on" v-bind="attrs" icon v-on:click="editMode = true">     
@@ -37,6 +38,7 @@
             </template>
           <span>Annuler les modifications</span>
         </v-tooltip>
+        </div>
         </div>
       </v-card-title>
       <v-card-text>

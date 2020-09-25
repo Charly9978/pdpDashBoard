@@ -6,6 +6,7 @@
       <v-card-title primary-title>
         Entreprise
         <v-spacer></v-spacer>
+        <div v-if="$auth.isAdmin">
         <v-tooltip v-if="!editMode" bottom>
             <template v-slot:activator="{ on, attrs }">
         <v-btn  v-on="on" v-bind="attrs" icon v-on:click="editMode = true">
@@ -31,6 +32,7 @@
             </template>
             <span>Annuler les modifications</span>
           </v-tooltip>
+        </div>
         </div>
       </v-card-title>
       <v-card-text>
@@ -63,7 +65,7 @@
           :readonly="!editMode"
         ></v-text-field>
       <v-card-actions  class="justify-center" > 
-        <v-btn color="info" v-on:click.prevent="openValidation=true">Enregistrer un nouveau plan de prévention</v-btn>
+        <v-btn color="info" v-on:click.prevent="openValidation=true" :disabled="!$auth.isAdmin">Enregistrer un nouveau plan de prévention</v-btn>
       </v-card-actions>
       </v-card-text>
     </v-card>
@@ -93,7 +95,7 @@ export default {
         },
       openValidation:false,
       text: "Attention, si un plan de prévrention est en cours celui-ci va être archivé. Voulez-vous quand même créer un nouveau plan?",
-      openForm: false
+      openForm: false,
     };
   },
 

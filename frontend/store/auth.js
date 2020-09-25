@@ -8,6 +8,10 @@ export const getters = {
         return !state.user? false : true
     },
 
+    isAdmin(state){
+        return state.user.role.id === "5f6df7376cf3da000ca6e768"?true:false
+    },
+
     initials(state){
        if (state.user){
         const userName = state.user.username

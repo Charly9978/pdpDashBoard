@@ -10,6 +10,10 @@ export default async ({store, app, redirect, error }, inject) => {
            return store.getters['auth/isLogin'] 
         }
 
+        get isAdmin(){
+          return store.getters['auth/isAdmin']
+        }
+
         set user(user){
             store.commit('auth/SETUSER',user)
         }

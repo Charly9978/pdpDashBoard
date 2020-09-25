@@ -3,7 +3,7 @@
     <v-card>
       <v-card-title>Plans de prévention archivés
         <v-spacer></v-spacer>
-        <v-tooltip v-if="!isPdpEnCours" bottom>
+        <v-tooltip v-if="!isPdpEnCours && $auth.isAdmin" bottom>
           <template v-slot:activator="{ on, attrs }">
         <v-btn v-on="on" v-bind="attrs" icon v-on:click="reactiveLastPdp">     
           <v-icon >mdi-restart</v-icon>
