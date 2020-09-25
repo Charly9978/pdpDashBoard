@@ -14,7 +14,7 @@ export const createPdp = (data)=>{
                   status_pdp:"${data.status_pdp.id}",
                   commentaires:"${data.commentaires}",
                   urlPdf:"${data.urlPdf}",
-                  donneur_dordre:"${data.donneur_dordre}"
+                  user:"${data.donneur_dordre}"
                 }
               }
             ){
@@ -32,7 +32,7 @@ export const createPdp = (data)=>{
                 }
                 commentaires
                 urlPdf
-                donneur_dordre{
+                user{
                   id
                   email
                   nom

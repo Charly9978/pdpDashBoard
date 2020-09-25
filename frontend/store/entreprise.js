@@ -11,9 +11,9 @@ export const state = ()=>({
 })
 
 export const getters = {
-    pdpEnCours: state => state.entreprise.pdpEnCours[0],
+    pdpEnCours: state => state.entreprise.pdpEnCours,
     pdpArchive: state => state.entreprise.pdpArchive,
-    isPdpEnCours: state => state.entreprise.pdpEnCours[0]!=undefined?true:false,
+    isPdpEnCours: state => state.entreprise.pdpEnCours.length>0?true:false,
     idOfLastPdpArchive: state =>[...state.entreprise.pdpArchive].reverse()[0].id
 }
 

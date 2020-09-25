@@ -19,11 +19,8 @@
       "type": "email"
     },
     "plan_de_preventions": {
-      "collection": "plan-de-prevention",
-      "via": "entreprise"
-    },
-    "donneur_dordre": {
-      "model": "donneur-d-ordre"
+      "via": "entreprise",
+      "collection": "plan-de-prevention"
     },
     "principal_activity": {
       "type": "text"

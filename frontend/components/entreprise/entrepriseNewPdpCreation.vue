@@ -97,7 +97,7 @@
 </template>
 
 <script>
-import { endDateOlderThanBegin,lessThan12Month, getStatusId } from "~/utils/moment";
+import { endDateOlderThanBegin, lessThan12Month, getStatusId } from "~/utils/moment";
 import {
   required,
   url,
@@ -129,7 +129,7 @@ export default {
         status_pdp:{},
         commentaires:"",
         urlPdf:"",
-        donneur_dordre:this.$store.state.entreprise.entreprise.donneur_dordre.id
+        user:this.$auth.user.id
       },
     };
   },
@@ -175,7 +175,7 @@ export default {
         status_pdp:{},
         commentaires:"",
         urlPdf:"",
-        donneur_dordre:this.$store.state.entreprise.entreprise.donneur_dordre.id
+        user:this.$auth.user.id
       };
       this.$emit('close')
     },

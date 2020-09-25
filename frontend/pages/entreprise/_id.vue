@@ -2,10 +2,13 @@
   <div>
     <v-row>
      <entrepriseinfo></entrepriseinfo>
-      <entrepriseDonneurOrdre ></entrepriseDonneurOrdre>
+   <!--    <entrepriseDonneurOrdre ></entrepriseDonneurOrdre>--> 
     </v-row>
     <v-row>
-        <entreprisePdpEnCours v-if="isPdpEnCours"></entreprisePdpEnCours>
+     <!--   <entreprisePdpEnCours v-if="isPdpEnCours"></entreprisePdpEnCours>--> 
+    </v-row>
+    <v-row>
+       <entreprisePdpEnCoursBis v-if="isPdpEnCours"></entreprisePdpEnCoursBis>
     </v-row>
     <v-row>
         <entreprisePdpArchive v-if="isPdpArchive"></entreprisePdpArchive>
@@ -17,6 +20,7 @@
 import entrepriseinfo from "~/components/entreprise/entrepiseinfo";
 import entrepriseDonneurOrdre from "~/components/entreprise/entrepriseDonneurOrdre";
 import entreprisePdpEnCours from "~/components/entreprise/entreprisePdpEnCours"
+import entreprisePdpEnCoursBis from '~/components/entreprise/entreprisePdPEnCoursBis'
 import entreprisePdpArchive from "~/components/entreprise/entreprisePdpArchive"
 
 export default {
@@ -24,7 +28,8 @@ export default {
     entrepriseinfo,
     entrepriseDonneurOrdre,
     entreprisePdpEnCours,
-    entreprisePdpArchive
+    entreprisePdpArchive,
+    entreprisePdpEnCoursBis
   },
 
   computed:{

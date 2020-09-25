@@ -1,4 +1,4 @@
-export const entrepriseByIdQuery =(id) => {return{
+export const entrepriseByIdQuery = (id) => {return{
   query:`query{
     entreprise(id:"${id}"){
       id
@@ -6,23 +6,21 @@ export const entrepriseByIdQuery =(id) => {return{
       adresse
       contact
       principal_activity
-    	donneur_dordre{
-        id
-        nom
-        prenom
-        email
-        service_soitec{
-          id
-          nomService
-        }
-      }
       pdpEnCours:plan_de_preventions(where:{Archiver:false}){
         id
-        donneur_dordre{
-          nom
-          prenom
+        user{
+          id
           email
-          service_soitec{nomService}
+          role{
+            id
+            name     
+          }
+          nom
+          prenom 
+          service_soitec{
+            id
+            nomService
+          } 
         }
         beginDate
         endDate
@@ -42,7 +40,7 @@ export const entrepriseByIdQuery =(id) => {return{
         urlPdf
         urlDossierStockage
         descriptifIntervention
-      	donneur_dordre{
+      	user{
           nom
           service_soitec{nomService}
         }

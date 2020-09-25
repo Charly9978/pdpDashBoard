@@ -26,8 +26,8 @@
       "type": "string"
     },
     "entreprise": {
-      "via": "plan_de_preventions",
-      "model": "entreprise"
+      "model": "entreprise",
+      "via": "plan_de_preventions"
     },
     "status_pdp": {
       "model": "status-pdp",
@@ -41,6 +41,10 @@
     },
     "donneur_dordre": {
       "model": "donneur-d-ordre"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
     }
   }
 }

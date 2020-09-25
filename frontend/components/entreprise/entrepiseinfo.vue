@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="7">
+  <v-col cols="12">
     <v-card>
       <validation :openValidation='openValidation' :text='text' v-on:no="openValidation=false" v-on:yes='activeForm'></validation>
       <entrepriseNewPdpCreation :openForm='openForm' v-on:close='openForm=false'></entrepriseNewPdpCreation>
@@ -36,6 +36,8 @@
         </div>
       </v-card-title>
       <v-card-text>
+      <v-row>
+        <v-col cols="6">
         <v-text-field
           v-model="entreprise.nom"
           label="Nom de l'entreprise"
@@ -43,6 +45,16 @@
           :readonly="!editMode"
           :autofocus="editMode"
         ></v-text-field>
+        </v-col>
+        <v-col cols="6">
+        <v-text-field
+          v-model="entreprise.adresse"
+          label="Adresse"
+          outlined
+          :readonly="!editMode"
+        ></v-text-field>
+        </v-col>
+        <v-col cols="6">
         <v-text-field
           v-model="entreprise.principal_activity"
           label="Activité principale"
@@ -51,12 +63,8 @@
           persistent-hint
           :readonly="!editMode"
         ></v-text-field>
-        <v-text-field
-          v-model="entreprise.adresse"
-          label="Adresse"
-          outlined
-          :readonly="!editMode"
-        ></v-text-field>
+        </v-col>
+        <v-col cols="6">
         <v-text-field
           type="email"
           v-model="entreprise.contact"
@@ -64,10 +72,12 @@
           outlined
           :readonly="!editMode"
         ></v-text-field>
-      <v-card-actions  class="justify-center" > 
+        </v-col>
+      </v-row>
+      </v-card-text>
+      <v-card-actions  class="justify-center pb-7" > 
         <v-btn color="info" v-on:click.prevent="openValidation=true" :disabled="!$auth.isAdmin">Enregistrer un nouveau plan de prévention</v-btn>
       </v-card-actions>
-      </v-card-text>
     </v-card>
   </v-col>
 </template>

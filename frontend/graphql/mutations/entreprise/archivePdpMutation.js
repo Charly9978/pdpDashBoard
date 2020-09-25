@@ -12,7 +12,7 @@ export const archivePdpMutation = ({id,archivage}) => {
                 beginDate
                 urlPdf
                 urlDossierStockage
-                donneur_dordre {
+                user {
                   nom
                   service_soitec {
                     nomService
