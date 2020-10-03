@@ -16,6 +16,7 @@
       <v-text-field
         flat
         solo-inverted
+        v-model="search"
         hide-details
         prepend-inner-icon="mdi-magnify"
         label="Search"
@@ -56,6 +57,7 @@ export default {
 data(){
     return {
         drawer: false,
+        search:null
 //        initials: this.$store.getters['auth/initials'],
 //        email: this.$store.state.auth.user.email
     }
@@ -81,8 +83,13 @@ methods:{
   logout(){
     this.$auth.logout()
   }
+},
 
-
+watch:{
+  search:function(newValue){
+    console.log('test', this.$store.commit)
+    this.$store.commit('navbar/SETVALUE',newValue)
+  }
 }
 }
 </script>

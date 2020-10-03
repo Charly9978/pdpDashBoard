@@ -2,7 +2,7 @@
   <v-app dark>
     <navDrawer :drawer="drawer"></navDrawer>
     <navBar v-on:open-menu="openMenu"></navBar>
-    <v-main>
+    <v-main class="grey lighten-4">
       <v-container>
         <nuxt />
       </v-container>

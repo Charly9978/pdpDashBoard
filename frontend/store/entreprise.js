@@ -2,7 +2,7 @@ import {entrepriseByIdQuery} from '~/graphql/queries/entrepriseByIdQuery'
 import {updateEntrepriseMutation} from '~/graphql/mutations/entreprise/updateEntrepriseMutation'
 import {updateDonneurDOrdre} from '~/graphql/mutations/entreprise/updateDonneurDOrdre'
 import {updatePdpMutation} from '~/graphql/mutations/entreprise/updatePdpMutation'
-import {archivePdpMutation} from '~/graphql/mutations/entreprise/archivePdpMutation'
+import {archivagePdpMutation} from '~/graphql/mutations/planDePrevention/archivagePdpMutation'
 import {createPdp} from '~/graphql/mutations/entreprise/createPdp'
 
 export const state = ()=>({
@@ -84,7 +84,7 @@ export const actions = {
 
     async archiveEntreprisePdpEnCours({commit},pdpId){
         const response = await this.$api.request({
-            data: archivePdpMutation({
+            data: archivagePdpMutation({
                 id:pdpId,
                 archivage: true
             })

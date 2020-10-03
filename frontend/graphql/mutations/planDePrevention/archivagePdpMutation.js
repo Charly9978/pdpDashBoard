@@ -1,4 +1,4 @@
-export const archivePdpMutation = ({id,archivage}) => {
+export const archivagePdpMutation = ({id,archivage}) => {
     return{
         query:`mutation {
             updatePlanDePrevention(

@@ -13,7 +13,7 @@
             <v-list-item-title>Plans de prévention</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link nuxt to='/entreprise'>
           <v-list-item-action>
             <v-icon>mdi-factory</v-icon>
           </v-list-item-action>

@@ -8,7 +8,7 @@
      <!--   <entreprisePdpEnCours v-if="isPdpEnCours"></entreprisePdpEnCours>--> 
     </v-row>
     <v-row>
-       <entreprisePdpEnCoursBis v-if="isPdpEnCours"></entreprisePdpEnCoursBis>
+       <entreprisePdpEnCoursBis v-on:click:row="test" v-if="isPdpEnCours"></entreprisePdpEnCoursBis>
     </v-row>
     <v-row>
         <entreprisePdpArchive v-if="isPdpArchive"></entreprisePdpArchive>
@@ -19,7 +19,6 @@
 <script>
 import entrepriseinfo from "~/components/entreprise/entrepiseinfo";
 import entrepriseDonneurOrdre from "~/components/entreprise/entrepriseDonneurOrdre";
-import entreprisePdpEnCours from "~/components/entreprise/entreprisePdpEnCours"
 import entreprisePdpEnCoursBis from '~/components/entreprise/entreprisePdPEnCoursBis'
 import entreprisePdpArchive from "~/components/entreprise/entreprisePdpArchive"
 
@@ -27,7 +26,6 @@ export default {
   components: {
     entrepriseinfo,
     entrepriseDonneurOrdre,
-    entreprisePdpEnCours,
     entreprisePdpArchive,
     entreprisePdpEnCoursBis
   },
@@ -44,6 +42,12 @@ export default {
   async fetch({store,route}){
     await store.dispatch('entreprise/fetchEntrepriseById',route.params.id)
   },
+
+  methods:{
+    test(){
+      console.log('test')
+    }
+  }
 
 };
 </script>

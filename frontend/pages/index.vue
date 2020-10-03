@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import {plansDePreventionsQuery} from '~/graphql/queries/plandepreventions'
+import {plansDePreventionsQuery} from '~/graphql/queries/planPrevention/plandepreventions'
 import pdpCard from '~/components/pdpCard'
 
 export default {

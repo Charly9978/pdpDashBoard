@@ -1,9 +1,9 @@
 <template>
   <v-col cols="12">
-    <v-card>
+    <v-card >
       <v-card-title>Plans de prévention en cours
       </v-card-title>
-      <v-card-text>
+      <v-card-text >
         <v-data-table
           :headers="headers"
           :items="pdpEnCours"
@@ -12,8 +12,13 @@
           sort-by="beginDate"
           sort-desc
         >
+          <template v-slot:[`item.open`]="{ item }">
+            <v-btn icon @click.stop='test(item)'>
+              <v-icon small>mdi-link</v-icon>
+            </v-btn>
+          </template>
           <template v-slot:[`item.pdf`]="{ item }">
-            <v-btn icon :href="item.urlPdf" target="_blank">
+            <v-btn icon :href="item.urlPdf" @click.stop="" target="_blank">
               <v-icon small>mdi-file-pdf</v-icon>
             </v-btn>
           </template>
@@ -34,6 +39,10 @@ export default {
     return {
 
       headers: [
+        {
+          text: "Lien",
+          value: "open"
+        },
         {
           text: "Date de signature",
           value: "beginDate",
@@ -61,6 +70,12 @@ export default {
   computed:{
     pdpEnCours(){
       return this.$store.getters['entreprise/pdpEnCours']
+    }
+  },
+
+  methods:{
+    test(item){
+      this.$router.push(`/planDePrevention/${item.id}`)
     }
   }
 }

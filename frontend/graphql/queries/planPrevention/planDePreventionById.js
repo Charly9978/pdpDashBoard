@@ -1,0 +1,54 @@
+export const planDePreventionById = (id)=>{
+    console.log('id', id)
+    return{
+        query:`query{
+            planDePrevention(id:"${id}"){
+            id
+            beginDate
+            endDate
+            Archiver
+            descriptifIntervention
+            urlDossierStockage
+            commentaires
+            urlPdf
+            entreprise{
+                nom
+                principal_activity
+              }
+            status_pdp{
+              id
+              text
+              color
+            }
+            user{
+              service_soitec{
+                nomService
+                  }
+              role{
+                name
+              }
+              email
+              nom
+              prenom
+              id
+            }
+          }
+          statusPdps{
+            id
+            text
+            color
+          }
+          users {
+            id
+            username
+            email
+            nom
+            prenom
+            service_soitec {
+              id
+              nomService
+            }
+          }
+          }`
+    }
+}
