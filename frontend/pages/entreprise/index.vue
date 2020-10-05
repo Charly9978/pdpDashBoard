@@ -1,16 +1,38 @@
 <template>
-<div>
-<entrepriseCard v-for="entreprise in resultQuery" :key="entreprise.id" :entreprise="entreprise"></entrepriseCard>
-</div>
+    <v-container fluid>
+        <entrepriseFormCreation :openForm="openForm" @close="openForm=false"></entrepriseFormCreation>
+        <v-row class="justify-center">
+            <v-col cols=9>
+                <div class="text-right">
+            <v-btn color="primary" @click="openForm=true">Add a entreprise
+                <v-icon>mdi-plus</v-icon>
+            </v-btn>
+
+                </div>
+            </v-col>
+        </v-row>
+        <v-row class="justify-center">
+            <v-col cols=9>
+<entrepriseCard v-for="entreprise in resultQuery" :key="entreprise.id" :entreprise="entreprise"></entrepriseCard>        
+
+            </v-col>
+
+        </v-row>
+
+        
+    </v-container>
 </template>
 
 <script>
 import {entreprisesQuery} from '~/graphql/queries/entreprise/entreprisesQuery'
 import entrepriseCard from '~/components/entreprise/entrepriseCard'
+import entrepriseFormCreation from '~/components/entreprise/entrepriseFormCreation'
+
 export default {
 
     components:{
-        entrepriseCard
+        entrepriseCard,
+        entrepriseFormCreation
     },
 
     async asyncData(context){
@@ -20,6 +42,12 @@ export default {
 
         return {
             entreprises: resp.data.entreprises
+        }
+    },
+
+    data(){
+        return {
+            openForm:false
         }
     },
 

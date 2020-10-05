@@ -64,12 +64,8 @@ export default async ({store, app, redirect, error }, inject) => {
 
     const auth = new Auth()
 
-    console.log('pluginFetchUser')
-
     await auth.fetchUser()
     
-    console.log('plugingBeforeInject')
-
     inject('auth', auth)
   }
   
