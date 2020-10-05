@@ -1,10 +1,11 @@
 <template>
     <v-container fluid>
+        <validation :text="validationText" :openValidation="openValidation" @yes="openFormulaire" @no="openValidation = false"></validation>
         <entrepriseFormCreation :openForm="openForm" @close="openForm=false"></entrepriseFormCreation>
         <v-row class="justify-center">
             <v-col cols=9>
                 <div class="text-right">
-            <v-btn color="primary" @click="openForm=true">Add a entreprise
+            <v-btn color="primary" @click="openValidation=true">Add a entreprise
                 <v-icon>mdi-plus</v-icon>
             </v-btn>
 
@@ -27,12 +28,14 @@
 import {entreprisesQuery} from '~/graphql/queries/entreprise/entreprisesQuery'
 import entrepriseCard from '~/components/entreprise/entrepriseCard'
 import entrepriseFormCreation from '~/components/entreprise/entrepriseFormCreation'
+import validation from '~/components/utilities/Validation'
 
 export default {
 
     components:{
         entrepriseCard,
-        entrepriseFormCreation
+        entrepriseFormCreation,
+        validation
     },
 
     async asyncData(context){
@@ -47,7 +50,9 @@ export default {
 
     data(){
         return {
-            openForm:false
+            openForm:false,
+            openValidation:false,
+            validationText:"Avant de créer une nouvelle entreprise, vérifiez que celle-ci n'existe pas déjà. Utiliser la barre de recherche pour trouver l'entreprise. Etes-vous sur de vouloir créer une nouvelle entreprise?"
         }
     },
 
@@ -65,7 +70,15 @@ export default {
         return this.entreprises;
       }
     }
+    },
+
+    methods:{
+        openFormulaire(){
+            this.openValidation = false
+            this.openForm = true
+        }
     }
+
 
 }
 </script>
