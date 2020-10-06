@@ -6,8 +6,8 @@
         <v-card-text>{{text}}</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="success" @click="$emit('yes')">Oui</v-btn>
-          <v-btn color="success" @click="$emit('no')">Non</v-btn>
+          <v-btn color="success" @click.stop="$emit('yes')">Oui</v-btn>
+          <v-btn color="success" @click.stop="$emit('no')">Non</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

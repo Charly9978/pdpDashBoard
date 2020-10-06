@@ -7,6 +7,7 @@
 >
   
   <v-col cols="12">
+    <validation :text="textValidation" :openValidation="openValidation" @yes="sendData" @no="onNo"></validation>
   <v-card>
       <v-card-title primary-title>
           Création d'une nouvelle entreprise
@@ -55,8 +56,8 @@
       </v-card-text>
       <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary">Enregistrer</v-btn>
-          <v-btn color="primary" @click="cancel">Annuler</v-btn>
+          <v-btn color="primary" @click.stop="checkEntreprise">Enregistrer</v-btn>
+          <v-btn color="primary" @click.stop="cancel">Annuler</v-btn>
       </v-card-actions>
   </v-card>
   </v-col>
@@ -72,12 +73,22 @@ import {
   between
 } from "vuelidate/lib/validators";
 
+import validation from '~/components/utilities/Validation'
+
 export default {
+
+  components:{
+    validation
+  },
 
     props:{
         openForm: {
             type: Boolean,
             required: true
+        },
+        entreprises: {
+          type: Array,
+          required: true
         }
     },
 
@@ -87,6 +98,8 @@ export default {
             adresse: "",
             principal_activity: "",
             contact: "",
+            textValidation: "Cette entreprise semble déjà existée. Voulez vous quand même la créer?",
+            openValidation: false
         }
     },
 
@@ -114,6 +127,13 @@ export default {
       if(!this.$v.principal_activity.maxLength) error.push("Vous avez dépasser le nombre maximal de lettres")
       return error;
     },
+      isEntrepriseAlreadyExist(){
+        return this.entreprises.map(entreprise=>entreprise.nom.toLowerCase()).includes(this.nom.toLowerCase())
+/*         const entreprises = this.entreprises.filter((entreprise)=>{
+        return this.nom.toLowerCase().split(' ').every(v => entreprise.nom.toLowerCase().includes(v))
+      })
+      return entreprises.length>0?true:false */
+      }
 
     },
 
@@ -142,8 +162,30 @@ export default {
             this.principal_activity= ""
             this.contact= ""
             this.$emit('close')
+        },
+
+        checkEntreprise(){
+          if(this.isEntrepriseAlreadyExist){
+            this.openValidation = true
+          }else{
+            this.sendData()
+          }
+          
+        },
+
+        onNo(){
+          this.openValidation = false
+          this.cancel()
+        },
+
+        sendData(){
+          this.openValidation = false
+          console.log("envoie de la nouvelle data")
+          this.cancel()
         }
-    }
+    },
+
+
 
 }
 </script>

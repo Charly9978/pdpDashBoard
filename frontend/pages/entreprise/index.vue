@@ -1,7 +1,7 @@
 <template>
     <v-container fluid>
         <validation :text="validationText" :openValidation="openValidation" @yes="openFormulaire" @no="openValidation = false"></validation>
-        <entrepriseFormCreation :openForm="openForm" @close="openForm=false"></entrepriseFormCreation>
+        <entrepriseFormCreation :openForm="openForm" @close="openForm=false" :entreprises="entreprises"></entrepriseFormCreation>
         <v-row class="justify-center">
             <v-col cols=9>
                 <div class="text-right">

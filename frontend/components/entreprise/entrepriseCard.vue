@@ -6,7 +6,7 @@
             <div  v-if="!isPdpEnCours" class="text-subtitle-1">Pas de plans de prévention en cours</div>
         <v-spacer></v-spacer>
         <v-card-actions>
-        <v-btn round color="primary" icon dark nuxt :to="`/entreprise/${entreprise.id}`">
+        <v-btn rounded color="primary" icon dark nuxt :to="`/entreprise/${entreprise.id}`">
             <v-icon>mdi-magnify</v-icon>
         </v-btn>
         </v-card-actions>        
