@@ -74,6 +74,7 @@ import {
 } from "vuelidate/lib/validators";
 
 import validation from '~/components/utilities/Validation'
+import {createEntrepriseMutation} from '~/graphql/mutations/entreprise/createEntrepriseMutation'
 
 export default {
 
@@ -178,9 +179,18 @@ export default {
           this.cancel()
         },
 
-        sendData(){
+        async sendData(){
           this.openValidation = false
           console.log("envoie de la nouvelle data")
+          const resp = await this.$api.request({
+            data:createEntrepriseMutation({
+              nom: this.nom,
+              contact: this.contact,
+              principal_activity: this.principal_activity,
+              adresse: this.adresse
+            })
+          })
+          console.log("resp",resp)
           this.cancel()
         }
     },
