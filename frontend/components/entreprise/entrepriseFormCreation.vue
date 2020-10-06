@@ -190,8 +190,11 @@ export default {
               adresse: this.adresse
             })
           })
-          console.log("resp",resp)
           this.cancel()
+          console.log("res",resp)
+          const newEntrepriseId = resp.data.createEntreprise.entreprise.id
+          console.log('id',newEntrepriseId)
+          this.$router.push(`/entreprise/${newEntrepriseId}`)
         }
     },
 

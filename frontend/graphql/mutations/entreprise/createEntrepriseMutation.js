@@ -10,10 +10,6 @@ export const createEntrepriseMutation = ({nom,contact,adresse,principal_activity
             } }) {
               entreprise {
                 id
-                nom
-                contact
-                adresse
-                principal_activity
               }
             }
           }`

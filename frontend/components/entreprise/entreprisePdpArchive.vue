@@ -1,16 +1,14 @@
 <template>
   <v-col cols="12">
-    <v-card>
+    <v-card v-if="!isPdpArchive">
+      <v-card-title>Plans de prévention archivés</v-card-title>
+        <v-card-subtitle>
+          Aucun document archivé
+        </v-card-subtitle> 
+    </v-card>
+    <v-card v-else>
       <v-card-title>Plans de prévention archivés
         <v-spacer></v-spacer>
-        <v-tooltip v-if="!isPdpEnCours && $auth.isAdmin" bottom>
-          <template v-slot:activator="{ on, attrs }">
-        <v-btn v-on="on" v-bind="attrs" icon v-on:click="reactiveLastPdp">     
-          <v-icon >mdi-restart</v-icon>
-        </v-btn>
-          </template>
-          <span>Réactiver le dernier plan archivé</span>
-        </v-tooltip>
       </v-card-title>
       <v-card-text>
         <v-data-table
@@ -39,6 +37,13 @@
 
 <script>
 export default {
+  props:{
+    pdpArchive:{
+      required: true,
+      type: Array
+    }
+  },
+
   data() {
     return {
 
@@ -59,27 +64,15 @@ export default {
           value: "folder",
           sortable: false
         },
-      ],
-      pdpArchive: this.$store.getters["entreprise/pdpArchive"],
-    };
+      ]
+     };
   },
 
   computed:{
-    isPdpEnCours(){
-      return this.$store.getters['entreprise/isPdpEnCours']
+    isPdpArchive(){
+      return this.pdpArchive.length>0?true:false
     }
   },
-
-  methods:{
-   async reactiveLastPdp(){
-     try {
-       const lastPdpId = this.$store.getters['entreprise/idOfLastPdpArchive']
-       await this.$store.dispatch('entreprise/reactivePdp',lastPdpId)
-     } catch (error) {
-       console.log(error)
-     }
-    }
-  }
 };
 </script>
 

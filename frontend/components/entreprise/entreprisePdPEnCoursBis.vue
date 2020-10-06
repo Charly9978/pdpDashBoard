@@ -1,6 +1,14 @@
 <template>
   <v-col cols="12">
-    <v-card >
+    <v-card v-if="!isPdpEnCours">
+      <v-card-title primary-title>
+        Plans de prévention en cours
+      </v-card-title>
+      <v-card-subtitle>
+        Aucun document en cours
+      </v-card-subtitle>
+    </v-card>
+    <v-card v-else>
       <v-card-title>Plans de prévention en cours
       </v-card-title>
       <v-card-text >
@@ -35,6 +43,13 @@
 
 <script>
 export default {
+
+  props:{
+    pdpEnCours: {
+      required: true,
+      type: Array
+    }
+  },
       data() {
     return {
 
@@ -67,11 +82,11 @@ export default {
     }
   },
 
-  computed:{
-    pdpEnCours(){
-      return this.$store.getters['entreprise/pdpEnCours']
+   computed:{
+    isPdpEnCours(){
+      return this.pdpEnCours.length>0?true:false
     }
-  },
+  }, 
 
   methods:{
     test(item){

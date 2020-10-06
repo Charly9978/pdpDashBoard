@@ -34,8 +34,6 @@ export default {
 </script>
 
 <style>
-.test{
-    justify-content: space-between;
-}
+
 
 </style>

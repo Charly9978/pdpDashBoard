@@ -2,7 +2,7 @@
   <v-col cols="12">
     <v-card>
       <validation :openValidation='openValidation' :text='text' v-on:no="openValidation=false" v-on:yes='activeForm'></validation>
-      <entrepriseNewPdpCreation :openForm='openForm' v-on:close='openForm=false'></entrepriseNewPdpCreation>
+     <!-- <entrepriseNewPdpCreation :openForm='openForm' v-on:close='openForm=false'></entrepriseNewPdpCreation>-->
       <v-card-title primary-title>
         Entreprise
         <v-spacer></v-spacer>
@@ -39,38 +39,42 @@
       <v-row>
         <v-col cols="6">
         <v-text-field
-          v-model="entreprise.nom"
+          v-model="entrepriseDatas.nom"
           label="Nom de l'entreprise"
           outlined
           :readonly="!editMode"
           :autofocus="editMode"
+          :background-color= editBackGroundColor
         ></v-text-field>
         </v-col>
         <v-col cols="6">
         <v-text-field
-          v-model="entreprise.adresse"
+          v-model="entrepriseDatas.adresse"
           label="Adresse"
           outlined
           :readonly="!editMode"
+          :background-color= editBackGroundColor
         ></v-text-field>
         </v-col>
         <v-col cols="6">
         <v-text-field
-          v-model="entreprise.principal_activity"
+          v-model="entrepriseDatas.principal_activity"
           label="Activité principale"
           outlined
           hint="Pour les entreprises avec plusieurs activité. Ex: Applied polissage et Applied implant"
           persistent-hint
           :readonly="!editMode"
+          :background-color= editBackGroundColor
         ></v-text-field>
         </v-col>
         <v-col cols="6">
         <v-text-field
           type="email"
-          v-model="entreprise.contact"
+          v-model="entrepriseDatas.contact"
           label="Email du repésentant de l'entreprise"
           outlined
           :readonly="!editMode"
+          :background-color= editBackGroundColor
         ></v-text-field>
         </v-col>
       </v-row>
@@ -85,6 +89,7 @@
 <script>
 import validation from '~/components/utilities/Validation'
 import entrepriseNewPdpCreation from '~/components/entreprise/entrepriseNewPdpCreation'
+import {updateEntrepriseMutation} from '~/graphql/mutations/entreprise/updateEntrepriseMutation'
 
 export default {
 
@@ -93,42 +98,45 @@ export default {
     entrepriseNewPdpCreation
   },
 
+  props:{
+    entreprise:{
+      required: true,
+      type: Object
+    }
+  },
+
   data() {
     return {
       editMode: false,
-      entreprise:{
-        id:this.$store.state.entreprise.entreprise.id,
-        nom:this.$store.state.entreprise.entreprise.nom,
-        adresse: this.$store.state.entreprise.entreprise.adresse,
-        principal_activity: this.$store.state.entreprise.entreprise.principal_activity,
-        contact: this.$store.state.entreprise.entreprise.contact
-        },
       openValidation:false,
       text: "Attention, si un plan de prévrention est en cours celui-ci va être archivé. Voulez-vous quand même créer un nouveau plan?",
       openForm: false,
+      entrepriseDatas: {...this.entreprise}
     };
+  },
+
+  computed:{
+    editBackGroundColor(){
+      return this.editMode?"blue lighten-5":""
+    },
   },
 
   methods: {
     cancel() {
-      this.entreprise.id =this.$store.state.entreprise.entreprise.id,
-        this.entreprise.nom =this.$store.state.entreprise.entreprise.nom,
-        this.entreprise.adresse = this.$store.state.entreprise.entreprise.adresse,
-        this.entreprise.principal_activity = this.$store.state.entreprise.entreprise.principal_activity,
-        this.entreprise.contact = this.$store.state.entreprise.entreprise.contact;
+      this.entrepriseDatas = {...this.entreprise}
       this.editMode = false;
     },
 
     async save() {
-      this.$store.dispatch("entreprise/updateEntrepriseInfosById",this.entreprise)
-      .then(()=>this.editMode=false)
-      .catch((e)=>{
-        console.log(e)
+      try {
+        await this.$api({
+          data: updateEntrepriseMutation(this.entrepriseDatas)
+        })
+        this.editMode=false
+      } catch (error) {
+        console.log(error)
         this.cancel()
-      })
-    },
-    test(){
-      console.log("coucou")
+      }
     },
 
     activeForm(){

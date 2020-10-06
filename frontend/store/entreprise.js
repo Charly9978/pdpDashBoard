@@ -1,4 +1,4 @@
-import {entrepriseByIdQuery} from '~/graphql/queries/entrepriseByIdQuery'
+import {entrepriseByIdQuery} from '~/graphql/queries/entreprise/entrepriseByIdQuery'
 import {updateEntrepriseMutation} from '~/graphql/mutations/entreprise/updateEntrepriseMutation'
 import {updateDonneurDOrdre} from '~/graphql/mutations/entreprise/updateDonneurDOrdre'
 import {updatePdpMutation} from '~/graphql/mutations/entreprise/updatePdpMutation'
