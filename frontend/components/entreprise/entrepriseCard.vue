@@ -9,6 +9,9 @@
         <v-btn rounded color="primary" icon dark nuxt :to="`/entreprise/${entreprise.id}`">
             <v-icon>mdi-magnify</v-icon>
         </v-btn>
+        <v-btn v-if="$auth.isAdmin" rounded color="primary" icon dark>
+            <v-icon>mdi-delete</v-icon>
+        </v-btn>
         </v-card-actions>        
     </v-card-title>
 
