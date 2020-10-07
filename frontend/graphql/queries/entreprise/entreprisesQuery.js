@@ -1,6 +1,6 @@
 export const entreprisesQuery = {
     query:`query{
-        entreprises{
+        entreprises(sort:"nom:asc"){
           id
           nom
           adresse
