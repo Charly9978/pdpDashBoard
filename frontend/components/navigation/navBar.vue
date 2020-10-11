@@ -5,7 +5,7 @@
       clipped-left
       dark
     >
-      <v-app-bar-nav-icon @click.stop="openMenu"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="toggleMenu"></v-app-bar-nav-icon>
       <v-toolbar-title
         style="width: 300px"
         class="ml-0 pl-4"
@@ -45,16 +45,10 @@
 <script>
 export default {
 
-data(){
-    return {
-        drawer: false
-    }
-},
 
 methods:{
-  openMenu(){
-    this.drawer=!this.drawer
-    this.$emit('open-menu',this.drawer)
+  toggleMenu(){
+    this.$store.commit('navbar/SETOPENDRAWER')
   }
 }
 }

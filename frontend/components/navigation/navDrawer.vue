@@ -27,11 +27,11 @@
 
 <script>
 export default {
-    props:{
-        drawer:{
-            default:'false',
-            type: Boolean
-        }
+
+    computed:{
+      drawer(){
+        return this.$store.state.navbar.openDrawer
+      }
     }
 
 }
