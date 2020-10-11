@@ -24,6 +24,7 @@
 
 <script>
 import validation from '~/components/utilities/Validation'
+import {deleteEntrepriseMutation} from '~/graphql/mutations/entreprise/deleteEntrepriseMutation'
 
 export default {
 
@@ -44,6 +45,21 @@ export default {
             validationText:"Etes vous sûr de vouloir supprimer cette entreprise? Cette action est définitive!",
             openValidation:false
         }
+    },
+
+    methods:{
+        async deleteEntreprise (){
+            this.openValidation = false
+            try {
+                await this.$api.request({
+                    data: deleteEntrepriseMutation(this.entreprise.id)
+                })
+                this.$emit('deleteEntreprise', this.entreprise.id) 
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
     }
 
 }

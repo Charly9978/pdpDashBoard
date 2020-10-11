@@ -27,6 +27,7 @@
           v-for="entreprise in resultQuery"
           :key="entreprise.id"
           :entreprise="entreprise"
+          @deleteEntreprise="deleteEntreprise"
         ></entrepriseCard>
       </v-col>
     </v-row>
@@ -89,6 +90,11 @@ export default {
       this.openValidation = false;
       this.openForm = true;
     },
+
+    deleteEntreprise(id) {
+        const index = this.entreprises.findIndex(entreprise => entreprise.id == id)
+        this.entreprises.splice(index,1)
+    }
   },
 };
 </script>
