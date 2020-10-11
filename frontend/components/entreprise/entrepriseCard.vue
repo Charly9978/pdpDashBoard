@@ -6,11 +6,11 @@
             <div  v-if="!isPdpEnCours" class="text-subtitle-1">Pas de plans de prévention en cours</div>
         <v-spacer></v-spacer>
         <v-card-actions>
+        <v-btn v-if="$auth.isAdmin && !isPdp" rounded color="primary" icon dark>
+            <v-icon>mdi-delete</v-icon>
+        </v-btn>
         <v-btn rounded color="primary" icon dark nuxt :to="`/entreprise/${entreprise.id}`">
             <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-        <v-btn v-if="$auth.isAdmin" rounded color="primary" icon dark>
-            <v-icon>mdi-delete</v-icon>
         </v-btn>
         </v-card-actions>        
     </v-card-title>
@@ -29,7 +29,8 @@ export default {
 
     data(){
         return{
-            isPdpEnCours:this.entreprise.pdpEnCours.length>0?true:false
+            isPdpEnCours:this.entreprise.plan_de_preventions.filter(pdp=>pdp.Archiver == false).length>0?true:false,
+            isPdp: this.entreprise.plan_de_preventions.length>0?true:false
         }
     }
 
