@@ -180,7 +180,7 @@ module.exports = {
       ctx.cookies.set('token',jwtToken,{
         httpOnly: true,
         secure: process.env.NODE_ENV === "production" ? true : false,
-        maxAge: 1000 * 60 * 60 * 24 * 14, // 14 Day Age
+        maxAge: 1000 * 60 * 60 * 24 , // 1 Day Age
         domain: process.env.NODE_ENV === "development" ? "localhost" : process.env.PRODUCTION_URL,
       })
 
