@@ -62,4 +62,19 @@ s
         })
     }
 
+    //créer un fichier .env dans le dossier que le docker-compose
+    //mettre les variables IMPORTDATA et EXPORTDATA à "false" (type string)
+    //les modifier pour déclencher les fonctions
+
+    if(process.env.IMPORTDATA == "true"){
+        importDatas()
+
+    }
+
+
+
+    if(process.env.EXPORTDATA == "true"){
+        exportDatas()
+    }
+
 };
