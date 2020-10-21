@@ -16,7 +16,10 @@ export default {
   ** See https://nuxtjs.org/api/configuration-head
   */
   publicRuntimeConfig:{
-    strapiUrl:process.env.STRAPI_URL || 'http://localhost:1337'
+    strapi:{
+      url:process.env.STRAPI_URL || 'http://localhost:1337',
+      adminId: process.env.STRAPI_ADMINID || "5f6df7376cf3da000ca6e768"
+    }
   },
 
 
@@ -62,6 +65,7 @@ export default {
   */
   modules: [
     '@nuxtjs/axios',
+    '@nuxt/http'
   ],
   /*
   ** vuetify module configuration
