@@ -15,6 +15,11 @@ export default {
   ** Headers of the page
   ** See https://nuxtjs.org/api/configuration-head
   */
+  publicRuntimeConfig:{
+    strapiUrl:process.env.STRAPI_URL || 'http://localhost:1337'
+  },
+
+
   head: {
     titleTemplate: '%s - ' + process.env.npm_package_name,
     title: process.env.npm_package_name || '',
@@ -37,6 +42,7 @@ export default {
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
+    '@/plugins/strapi.js',
     '@/plugins/axios.js',
     '@/plugins/vuelidate.js'
   ],
