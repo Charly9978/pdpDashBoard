@@ -38,8 +38,6 @@ module.exports = () => {
                  })
              })
     }
-
-s
     //modifier la variable d'environnement EXPORTDATA = "true" type string
     //redemarrer le docker
     //une fois l'exportation réussi arreté le docker, changer la variable à "false" et redémarrer le docker

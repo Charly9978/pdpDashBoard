@@ -8,7 +8,7 @@ export default async function(context, inject){
             this.strapiUrl = ctx.$config.strapi.url
             this.adminId = ctx.$config.strapi.adminId
             this.state = Vue.observable({ user: null })
-            this.$http = ctx.$http.create({mode: "no-cors"})
+            this.$http = ctx.$http.create()
             this.$http.setBaseURL(this.strapiUrl)
 /*             this.$http.onError((err) => {
                 console.error(err)
