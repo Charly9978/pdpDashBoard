@@ -15,6 +15,14 @@ export default {
   ** Headers of the page
   ** See https://nuxtjs.org/api/configuration-head
   */
+  publicRuntimeConfig:{
+    strapi:{
+      url:process.env.STRAPI_URL || 'http://localhost:1337',
+      adminId: process.env.STRAPI_ADMINID || "5f6df7376cf3da000ca6e768"
+    }
+  },
+
+
   head: {
     titleTemplate: '%s - ' + process.env.npm_package_name,
     title: process.env.npm_package_name || '',
@@ -37,6 +45,7 @@ export default {
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
+    '@/plugins/strapi.js',
     '@/plugins/axios.js',
     '@/plugins/vuelidate.js',
     '@/plugins/auth.js'
@@ -59,7 +68,18 @@ export default {
   */
   modules: [
     '@nuxtjs/axios',
+    '@nuxt/http',
   ],
+
+/*   http: {
+    proxy: true
+  },
+
+  proxy: {
+    '/api/': 'http://localhost:1337',
+  }, */
+
+
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module
