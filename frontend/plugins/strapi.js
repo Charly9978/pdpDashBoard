@@ -8,11 +8,11 @@ export default async function(context, inject){
             this.strapiUrl = ctx.$config.strapi.url
             this.adminId = ctx.$config.strapi.adminId
             this.state = Vue.observable({ user: null })
-            this.$http = ctx.$http.create({})
+            this.$http = ctx.$http.create({mode: "no-cors"})
             this.$http.setBaseURL(this.strapiUrl)
-            this.$http.onError((err) => {
+/*             this.$http.onError((err) => {
                 console.error(err)
-            })
+            }) */
         }
 
         get user() {
@@ -88,7 +88,10 @@ export default async function(context, inject){
 
     const strapi = new Strapi(context)
 
+
+
     await strapi.fetchUser()
+
 
     inject('strapi', strapi)
 }
