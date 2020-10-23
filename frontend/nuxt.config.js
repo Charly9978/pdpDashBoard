@@ -46,9 +46,7 @@ export default {
   */
   plugins: [
     '@/plugins/strapi.js',
-    '@/plugins/axios.js',
     '@/plugins/vuelidate.js',
-    '@/plugins/auth.js'
   ],
   /*
   ** Auto import components
@@ -67,8 +65,7 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    '@nuxtjs/axios',
-    '@nuxt/http',
+    '@nuxt/http'
   ],
 
    http: {
