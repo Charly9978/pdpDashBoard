@@ -129,7 +129,7 @@ export default {
         status_pdp:{},
         commentaires:"",
         urlPdf:"",
-        user:this.$auth.user.id
+        user:this.$strapi.user.id
       },
     };
   },
@@ -175,7 +175,7 @@ export default {
         status_pdp:{},
         commentaires:"",
         urlPdf:"",
-        user:this.$auth.user.id
+        user:this.$strapi.user.id
       };
       this.$emit('close')
     },

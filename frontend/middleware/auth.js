@@ -1,6 +1,5 @@
 export default async function ({
   route,
-  $auth,
   $strapi,
   redirect,
   query,

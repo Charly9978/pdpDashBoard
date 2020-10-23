@@ -6,7 +6,7 @@
       <v-card-title primary-title>
         Entreprise
         <v-spacer></v-spacer>
-        <div v-if="$auth.isAdmin">
+        <div v-if="$strapi.userIsAdmin">
         <v-tooltip v-if="!editMode" bottom>
             <template v-slot:activator="{ on, attrs }">
         <v-btn  v-on="on" v-bind="attrs" icon v-on:click="editMode = true">
@@ -80,7 +80,7 @@
       </v-row>
       </v-card-text>
       <v-card-actions  class="justify-center pb-7" > 
-        <v-btn color="info" v-on:click.prevent="openValidation=true" :disabled="!$auth.isAdmin">Enregistrer un nouveau plan de prévention</v-btn>
+        <v-btn color="info" v-on:click.prevent="openValidation=true" :disabled="!$strapi.userIsAdmin">Enregistrer un nouveau plan de prévention</v-btn>
       </v-card-actions>
     </v-card>
   </v-col>
