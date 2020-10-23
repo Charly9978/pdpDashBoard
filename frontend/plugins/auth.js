@@ -64,7 +64,7 @@ export default async ({store, app, redirect, error }, inject) => {
 
     const auth = new Auth()
 
-    await auth.fetchUser()
+   // await auth.fetchUser()
     
     inject('auth', auth)
   }

@@ -71,13 +71,13 @@ export default {
     '@nuxt/http',
   ],
 
-/*   http: {
+   http: {
     proxy: true
   },
 
   proxy: {
     '/api/': 'http://localhost:1337',
-  }, */
+  },
 
 
   /*

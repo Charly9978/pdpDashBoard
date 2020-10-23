@@ -1,6 +1,7 @@
 export default async function ({
   route,
   $auth,
+  $strapi,
   redirect,
   query,
   error
@@ -9,7 +10,7 @@ export default async function ({
   console.log('route', route.path)
 
   if (route.path === '/login') {
-    return $auth.connectToGoogle()
+    return $strapi.connectToGoogle()
   }
 
   if (route.path === '/logout') {
@@ -24,7 +25,7 @@ export default async function ({
     const accesToken = query.access_token
 
     try {
-      await $auth.login(accesToken)
+      await $strapi.login(accesToken)
       redirect('/')  
     } catch (e) {
       console.log(e.response)
@@ -36,7 +37,7 @@ export default async function ({
   }
 
 
-  if (!$auth.isLogin) {
+  if (!$strapi.userIsLogin) {
     return redirect('/login')
   }
 

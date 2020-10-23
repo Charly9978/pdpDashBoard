@@ -8,7 +8,7 @@ export default async function(context, inject){
             this.strapiUrl = ctx.$config.strapi.url
             this.adminId = ctx.$config.strapi.adminId
             this.state = Vue.observable({ user: null })
-            this.$http = ctx.$http.create()
+            this.$http = ctx.$http.create({credentials: 'include'})
             this.$http.setBaseURL(this.strapiUrl)
 /*             this.$http.onError((err) => {
                 console.error(err)
@@ -46,9 +46,8 @@ export default async function(context, inject){
         async fetchUser(){
             try {
                 console.log("debut fetchUser")
-                const resp = await this.$http.$get('/users/me')
+                this.user = await this.$http.$get('/users/me')
                 console.log('respfromstrapi',resp)
-                this.user = resp.data
             } catch (error) {
                 this.ctx.redirect('/login')
             }
@@ -64,7 +63,7 @@ export default async function(context, inject){
   
                 const res = await this.$http.$get(`/auth/google/callback?access_token=${accessToken}`)
                 console.log('res', res)
-                this.user = res.data.user        
+                this.user = res.user        
               } catch (e) {
                 console.log('errorfromplugin', e)
                 throw e
@@ -75,7 +74,7 @@ export default async function(context, inject){
         async logout(){
             this.user = null
             await this.$http.$get('/logout')
-            this.ctx.redirect(`${this.strapiUrl}/logout`)
+            this.ctx.redirect(`/logout`)
     
         }
 

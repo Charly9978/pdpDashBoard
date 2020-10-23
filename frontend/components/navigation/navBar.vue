@@ -58,19 +58,32 @@ export default {
 computed:{
 
   initials(){
-    return this.$store.getters['auth/initials']
+    return this.$strapi.userInitials
   },
 
   email(){
-    return this.$store.state.auth.user?this.$store.state.auth.user.email:null
+    return this.$strapi.userIsLogin?this.$strapi.user.email:null
   }
 },
 
 methods:{
   toggleMenu(){
     this.$store.commit('navbar/SETOPENDRAWER')
+  },
+
+  logout(){
+    this.$strapi.logout()
+  }
+},
+
+watch:{
+  search:function(newValue){
+    console.log('test', this.$store.commit)
+    this.$store.commit('navbar/SETVALUE',newValue)
   }
 }
+
+
 }
 </script>
 
