@@ -51,67 +51,63 @@ export const mutations = {
 
 export const actions = {
     async fetchEntrepriseById({commit},entrepriseId){
-        const response = await this.$api.request({
-            data: entrepriseByIdQuery(entrepriseId)
-        })
-        console.log("statusPdp",response.data.statusPdps)
-        commit('setEntreprise', {...response.data.entreprise})
-        commit('statusPdp/setStatus',[...response.data.statusPdps],{root:true})
+        const response = await this.$strapi.graphQl(
+            entrepriseByIdQuery(entrepriseId)
+        )
+        console.log("statusPdp",response.statusPdps)
+        commit('setEntreprise', {...response.entreprise})
+        commit('statusPdp/setStatus',[...response.statusPdps],{root:true})
     },
 
     async updateEntrepriseInfosById({commit},entreprise){
-        const response = await this.$api.request({
-            data: updateEntrepriseMutation(entreprise)
-        })
+        const response = await this.$strapi.graphQl(
+            updateEntrepriseMutation(entreprise)
+        )
         console.log("response",response)
-        commit('setEntrepriseInfos',{...response.data.updateEntreprise.entreprise})
+        commit('setEntrepriseInfos',{...response.updateEntreprise.entreprise})
 
     },
 
     async changeEntrepriseDonneurDOrdre({commit},{donneurDOrdreId,entrepriseId}){
-        const response = await this.$api.request({
-            data:updateDonneurDOrdre({donneurDOrdreId,entrepriseId})
-        })
-        commit('SetEntrepriseDonneurDOrdre',{...response.data.updateEntreprise.entreprise.donneur_dordre})
+        const response = await this.$strapi.graphQl(
+            updateDonneurDOrdre({donneurDOrdreId,entrepriseId})
+        )
+        commit('SetEntrepriseDonneurDOrdre',{...response.updateEntreprise.entreprise.donneur_dordre})
     },
 
     async updateEntreprisePdpEnCours({commit},pdp){
-        const response = await this.$api.request({
-            data: updatePdpMutation(pdp)
-        })
-        commit('setPdpEnCours',{...response.data.updatePlanDePrevention.planDePrevention})
+        const response = await this.$strapi.graphQl(updatePdpMutation(pdp))
+        commit('setPdpEnCours',{...response.updatePlanDePrevention.planDePrevention})
     },
 
     async archiveEntreprisePdpEnCours({commit},pdpId){
-        const response = await this.$api.request({
-            data: archivagePdpMutation({
+        const response = await this.$strapi.graphQl(
+            archivagePdpMutation({
                 id:pdpId,
                 archivage: true
             })
-        })
-        commit('setArchivePdp',{...response.data.updatePlanDePrevention.planDePrevention})
+        )
+        commit('setArchivePdp',{...response.updatePlanDePrevention.planDePrevention})
     },
 
     async reactivePdp({commit},pdpId){
-        const response = await this.$api.request({
-            data: archivePdpMutation({
+        const response = await this.$strapi.graphQl(
+            archivePdpMutation({
                 id:pdpId,
                 archivage: false
             })
-        }) 
-        commit('setPdpEnCours',{...response.data.updatePlanDePrevention.planDePrevention})
+        ) 
+        commit('setPdpEnCours',{...response.updatePlanDePrevention.planDePrevention})
         commit('removeLastPdpArchive')
     },
 
     async creatNewPdp({commit,getters,dispatch},pdp){
-        const response = await this.$api.request({
-            data:createPdp(pdp)
-        })
+        const response = await this.$strapi.graphQl(createPdp(pdp))
         if (getters.isPdpEnCours){
             const idPdPToArchive = getters.pdpEnCours.id
             console.log('idPdp',idPdPToArchive)
             await dispatch('archiveEntreprisePdpEnCours',idPdPToArchive)
         }
-        commit('setPdpEnCours',{...response.data.createPlanDePrevention.planDePrevention})
+        commit('setPdpEnCours',{...response.createPlanDePrevention.planDePrevention})
     }
 }

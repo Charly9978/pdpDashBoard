@@ -25,10 +25,8 @@ export default {
   },
 //pas besoin de created avec nuxt utilisé asyncData
   async created(){
-    const response = await this.$api.request({
-      data: plansDePreventionsQuery
-      })
-    this.planDePreventions = response.data.planDePreventions
+    const response = await this.$strapi.graphQl(plansDePreventionsQuery)
+    this.planDePreventions = response.planDePreventions
   }
 
 }

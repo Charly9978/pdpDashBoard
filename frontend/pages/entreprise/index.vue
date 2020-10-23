@@ -48,12 +48,10 @@ export default {
   },
 
   async asyncData(context) {
-    const resp = await context.$api.request({
-      data: entreprisesQuery,
-    });
+    const resp = await context.$strapi.graphQl(entreprisesQuery)
 
     return {
-      entreprises: resp.data.entreprises,
+      entreprises: resp.entreprises,
     };
   },
 

@@ -39,21 +39,19 @@ export default {
 
   async asyncData(ctx){
     const id = ctx.params.id
-    const resp = await ctx.$api.request({
-      data:entrepriseByIdQuery(id)
-    })
+    const resp = await ctx.$strapi.graphQl(entrepriseByIdQuery(id))
     console.log('resp', resp)
     return {
       entreprise:{
-        id: resp.data.entreprise.id,
-        nom: resp.data.entreprise.nom,
-        adresse: resp.data.entreprise.adresse,
-        contact: resp.data.entreprise.contact,
-        principal_activity: resp.data.entreprise.principal_activity
+        id: resp.entreprise.id,
+        nom: resp.entreprise.nom,
+        adresse: resp.entreprise.adresse,
+        contact: resp.entreprise.contact,
+        principal_activity: resp.entreprise.principal_activity
       },
-      pdpEnCours:resp.data.entreprise.pdpEnCours,
-      pdpArchive: resp.data.entreprise.pdpArchive,
-      statusPdps: resp.data.statusPdps
+      pdpEnCours:resp.entreprise.pdpEnCours,
+      pdpArchive: resp.entreprise.pdpArchive,
+      statusPdps: resp.statusPdps
     }
   }
 

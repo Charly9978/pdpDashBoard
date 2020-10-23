@@ -129,9 +129,9 @@ export default {
 
     async save() {
       try {
-        await this.$api({
-          data: updateEntrepriseMutation(this.entrepriseDatas)
-        })
+        await this.$strapi.graphQl(
+          updateEntrepriseMutation(this.entrepriseDatas)
+        )
         this.editMode=false
       } catch (error) {
         console.log(error)

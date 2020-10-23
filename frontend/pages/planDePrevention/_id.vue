@@ -223,13 +223,11 @@ import {
 
 export default {
   async asyncData(context) {
-    const resp = await context.$api.request({
-      data: planDePreventionById(context.params.id),
-    });
+    const resp = await context.$strapi.graphQl(planDePreventionById(context.params.id));
     return {
-      pdp: resp.data.planDePrevention,
-      status: resp.data.statusPdps,
-      users : resp.data.users
+      pdp: resp.planDePrevention,
+      status: resp.statusPdps,
+      users : resp.users
     };
   },
 
@@ -295,9 +293,9 @@ export default {
 
     async save() {
       try {
-        const resp = await this.$api.request({
-          data: updatePdpMutation({...this.pdp, user: this.user})
-        })
+        const resp = await this.$strapi.graphQl(
+          updatePdpMutation({...this.pdp, user: this.user})
+        )
         console.log('resp', resp)
         this.editMode = false;
         

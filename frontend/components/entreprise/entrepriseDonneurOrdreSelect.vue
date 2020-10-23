@@ -130,24 +130,21 @@ export default {
   },
 
   async created() {
-    const response = await this.$api.request({
-      data: donneurOrdresQuery,
-    });
-    this.donneurDOrdres = response.data.donneurDOrdres;
-    this.services = response.data.serviceSoitecs;
+    const response = await this.$strapi.graphQl(donneurOrdresQuery);
+    this.donneurDOrdres = response.donneurDOrdres;
+    this.services = response.serviceSoitecs;
   },
 
   methods: {
     async create(){
-      const newDonneurDOrdreResponse = await this.$api.request({
-        data: createDonneurDOrdre({
+      const newDonneurDOrdreResponse = await this.$strapi.graphQl(createDonneurDOrdre({
           nom: this.nom,
           prenom: this.prenom,
           email: this.email,
           service_soitec: this.service_soitec
         })
-      })
-      const donneurDOrdreId = newDonneurDOrdreResponse.data.createDonneurDOrdre.donneurDOrdre.id
+      )
+      const donneurDOrdreId = newDonneurDOrdreResponse.createDonneurDOrdre.donneurDOrdre.id
       this.returnDonneurDOrdre(donneurDOrdreId)
 
 

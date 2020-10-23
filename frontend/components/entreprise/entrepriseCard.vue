@@ -61,9 +61,9 @@ export default {
         async deleteEntreprise (){
             this.openValidation = false
             try {
-                await this.$api.request({
-                    data: deleteEntrepriseMutation(this.entreprise.id)
-                })
+                await this.$strapi.graphQl(
+                    deleteEntrepriseMutation(this.entreprise.id)
+                )
                 this.$emit('deleteEntreprise', this.entreprise.id) 
             } catch (error) {
                 console.log(error)

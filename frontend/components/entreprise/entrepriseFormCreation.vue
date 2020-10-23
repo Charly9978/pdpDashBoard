@@ -182,17 +182,17 @@ export default {
         async sendData(){
           this.openValidation = false
           console.log("envoie de la nouvelle data")
-          const resp = await this.$api.request({
-            data:createEntrepriseMutation({
+          const resp = await this.$strapi.graphQl(
+            createEntrepriseMutation({
               nom: this.nom,
               contact: this.contact,
               principal_activity: this.principal_activity,
               adresse: this.adresse
             })
-          })
+          )
           this.cancel()
           console.log("res",resp)
-          const newEntrepriseId = resp.data.createEntreprise.entreprise.id
+          const newEntrepriseId = resp.createEntreprise.entreprise.id
           console.log('id',newEntrepriseId)
           this.$router.push(`/entreprise/${newEntrepriseId}`)
         }
