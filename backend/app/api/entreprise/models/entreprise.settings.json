@@ -19,11 +19,14 @@
       "type": "email"
     },
     "plan_de_preventions": {
-      "via": "entreprise",
-      "collection": "plan-de-prevention"
+      "collection": "plan-de-prevention",
+      "via": "entreprise"
     },
     "principal_activity": {
       "type": "text"
+    },
+    "createdBy": {
+      "type": "string"
     }
   }
 }

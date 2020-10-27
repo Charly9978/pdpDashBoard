@@ -26,8 +26,8 @@
       "type": "string"
     },
     "entreprise": {
-      "model": "entreprise",
-      "via": "plan_de_preventions"
+      "via": "plan_de_preventions",
+      "model": "entreprise"
     },
     "status_pdp": {
       "model": "status-pdp",
