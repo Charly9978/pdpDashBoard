@@ -4,7 +4,7 @@
       <v-card-title primary-title>
         Plan de prévention
         <v-spacer></v-spacer>
-        <div v-if="$strapi.isUserAdmin">
+        <div v-if="$strapi.userIsAdmin">
           <v-tooltip v-if="!editMode && !createdModeStatut" bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-btn 

@@ -16,7 +16,8 @@ import navDrawer from '~/components/navigation/navDrawer'
 
 export default {
 
-  middleware: 'auth',
+  middleware: ['auth','closeMenu'],
+  
   components:{
     navBar,
     navDrawer

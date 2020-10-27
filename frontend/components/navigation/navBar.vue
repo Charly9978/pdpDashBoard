@@ -54,6 +54,12 @@
 <script>
 export default {
 
+  data(){
+    return {
+      search: null
+    }
+  },
+
 
 computed:{
 

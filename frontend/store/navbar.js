@@ -11,5 +11,9 @@ export const mutations = {
 
     SETOPENDRAWER(state){
         state.openDrawer = !state.openDrawer
+    },
+
+    SETCLOSEDRAWER(state){
+        state.openDrawer = false
     }
 }

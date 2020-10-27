@@ -8,7 +8,7 @@
             <div  v-if="!isPdpEnCours" class="text-subtitle-1">Pas de plans de prévention en cours</div>
         <v-spacer></v-spacer>
         <v-card-actions>
-          <v-tooltip bottom v-if="$strapi.isUserAdmin && !isPdp">
+          <v-tooltip bottom v-if="$strapi.userIsAdmin && !isPdp">
             <template v-slot:activator="{ on, attrs }">
               <v-btn v-on="on" v-bind="attrs" rounded color="primary" icon dark @click="openValidation = true">
                 <v-icon>mdi-delete</v-icon>

@@ -1,8 +1,9 @@
 <template>
       <v-navigation-drawer
-      v-model="drawer"
+      v-if="$store.state.navbar.openDrawer"
       clipped
       app
+      permanent
     >
       <v-list dense>
         <v-list-item link>
@@ -28,10 +29,10 @@
 <script>
 export default {
 
-    computed:{
-      drawer(){
-        return this.$store.state.navbar.openDrawer
-      }
+    methods:{
+       toggleMenu(){
+        this.$store.commit('navbar/SETOPENDRAWER')
+        }
     }
 
 }
