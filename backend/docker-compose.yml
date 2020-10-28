@@ -9,19 +9,18 @@ services:
       DATABASE_PORT: 27017
       DATABASE_USERNAME: strapi
       DATABASE_PASSWORD: strapi
-    links:
-      - mongo:mongo
     volumes:
       - ./app:/srv/app
     ports:
       - '1337:1337'
+    depends_on:
+      - mongo
 
   mongo:
     image: mongo
     environment:
+      MONGO_INITDB_DATABASE: strapi
       MONGO_INITDB_ROOT_USERNAME: strapi
       MONGO_INITDB_ROOT_PASSWORD: strapi
     volumes:
-      - ./data/db:/data/db
-    ports:
-      - '27017:27017'
+      - ./data:/data/db

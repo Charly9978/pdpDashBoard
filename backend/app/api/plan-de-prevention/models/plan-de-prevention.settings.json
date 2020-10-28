@@ -2,11 +2,13 @@
   "kind": "collectionType",
   "collectionName": "plan_de_preventions",
   "info": {
-    "name": "plan de prevention"
+    "name": "plan de prevention",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "beginDate": {
@@ -41,10 +43,6 @@
     },
     "donneur_dordre": {
       "model": "donneur-d-ordre"
-    },
-    "user": {
-      "plugin": "users-permissions",
-      "model": "user"
     }
   }
 }

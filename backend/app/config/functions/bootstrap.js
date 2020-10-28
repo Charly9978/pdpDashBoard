@@ -29,6 +29,8 @@ module.exports = () => {
         files.forEach( file => {
              const data = require(`../../data/${file}`)
              const fileWithoutJson = file.split('.json')[0]
+             console.log('fileWithoutJson',fileWithoutJson)
+             console.log(strapi.services)
              data.forEach( async (item,index) => {
                  try {
                      await strapi.services[fileWithoutJson].create(item)

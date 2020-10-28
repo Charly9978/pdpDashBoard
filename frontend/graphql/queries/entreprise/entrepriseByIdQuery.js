@@ -8,19 +8,15 @@ export const entrepriseByIdQuery = (id) => {return{
       principal_activity
       pdpEnCours:plan_de_preventions(where:{Archiver:false}){
         id
-        user{
+      	donneur_dordre{
           id
+          prenom
           email
-          role{
-            id
-            name     
-          }
           nom
-          prenom 
           service_soitec{
             id
             nomService
-          } 
+          }
         }
         beginDate
         endDate
@@ -40,7 +36,7 @@ export const entrepriseByIdQuery = (id) => {return{
         urlPdf
         urlDossierStockage
         descriptifIntervention
-      	user{
+      	donneur_dordre{
           nom
           service_soitec{nomService}
         }

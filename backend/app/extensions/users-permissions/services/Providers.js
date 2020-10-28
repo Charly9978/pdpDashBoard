@@ -11,6 +11,8 @@ const request = require('request');
 // Purest strategies.
 const purest = require('purest')({ request });
 const purestConfig = require('@purest/providers');
+const { getAbsoluteServerUrl } = require('strapi-utils');
+const jwt = require('jsonwebtoken');
 
 /**
  * Connect thanks to a third-party provider.
@@ -22,7 +24,7 @@ const purestConfig = require('@purest/providers');
  * @return  {*}
  */
 
-exports.connect = (provider, query) => {
+const connect = (provider, query) => {
   const access_token = query.access_token || query.code || query.oauth_token;
 
   return new Promise((resolve, reject) => {
@@ -36,11 +38,6 @@ exports.connect = (provider, query) => {
         return reject([null, err]);
       }
 
-      // We need at least the mail.
-      if (!profile.email) {
-        return reject([null, { message: 'Email was not available.' }]);
-      }
-
       //vérification si mail SOITEC
       const email = profile.email
 
@@ -51,7 +48,12 @@ exports.connect = (provider, query) => {
 
       if(company != "soitec"){
           return reject([null, { message : 'Vous ne faites pas parti de la société Soitec'}])
-      } 
+      }
+
+      // We need at least the mail.
+      if (!profile.email) {
+        return reject([null, { message: 'Email was not available.' }]);
+      }
 
       try {
         const users = await strapi.query('user', 'users-permissions').find({
@@ -67,15 +69,15 @@ exports.connect = (provider, query) => {
           })
           .get();
 
-        if (_.isEmpty(_.find(users, { provider })) && !advanced.allow_register) {
+        const user = _.find(users, { provider });
+
+        if (_.isEmpty(user) && !advanced.allow_register) {
           return resolve([
             null,
             [{ messages: [{ id: 'Auth.advanced.allow_register' }] }],
             'Register action is actualy not available.',
           ]);
         }
-
-        const user = _.find(users, { provider });
 
         if (!_.isEmpty(user)) {
           return resolve([user, null]);
@@ -170,6 +172,23 @@ const getProfile = async (provider, query, callback) => {
             });
           }
         });
+      break;
+    }
+    case 'cognito': {
+      // get the id_token
+      const idToken = query.id_token;
+      // decode the jwt token
+      const tokenPayload = jwt.decode(idToken);
+      if (!tokenPayload) {
+        callback(new Error('unable to decode jwt token'));
+      } else {
+        // Combine username and discriminator because discord username is not unique
+        var username = `${tokenPayload['cognito:username']}`;
+        callback(null, {
+          username: username,
+          email: tokenPayload.email,
+        });
+      }
       break;
     }
     case 'facebook': {
@@ -340,7 +359,7 @@ const getProfile = async (provider, query, callback) => {
 
       vk.query()
         .get('users.get')
-        .qs({ access_token, id: query.raw.user_id, v: '5.013' })
+        .qs({ access_token, id: query.raw.user_id, v: '5.122' })
         .request((err, res, body) => {
           if (err) {
             callback(err);
@@ -397,10 +416,81 @@ const getProfile = async (provider, query, callback) => {
         });
       break;
     }
+    case 'linkedin': {
+      const linkedIn = purest({
+        provider: 'linkedin',
+        config: {
+          linkedin: {
+            'https://api.linkedin.com': {
+              __domain: {
+                auth: [{ auth: { bearer: '[0]' } }],
+              },
+              '[version]/{endpoint}': {
+                __path: {
+                  alias: '__default',
+                  version: 'v2',
+                },
+              },
+            },
+          },
+        },
+      });
+      try {
+        const getDetailsRequest = () => {
+          return new Promise((resolve, reject) => {
+            linkedIn
+              .query()
+              .get('me')
+              .auth(access_token)
+              .request((err, res, body) => {
+                if (err) {
+                  return reject(err);
+                }
+                resolve(body);
+              });
+          });
+        };
+
+        const getEmailRequest = () => {
+          return new Promise((resolve, reject) => {
+            linkedIn
+              .query()
+              .get('emailAddress?q=members&projection=(elements*(handle~))')
+              .auth(access_token)
+              .request((err, res, body) => {
+                if (err) {
+                  return reject(err);
+                }
+                resolve(body);
+              });
+          });
+        };
+
+        const { localizedFirstName } = await getDetailsRequest();
+        const { elements } = await getEmailRequest();
+        const email = elements[0]['handle~'];
+
+        callback(null, {
+          username: localizedFirstName,
+          email: email.emailAddress,
+        });
+      } catch (err) {
+        callback(err);
+      }
+      break;
+    }
     default:
       callback({
         message: 'Unknown provider.',
       });
       break;
   }
+};
+
+const buildRedirectUri = (provider = '') =>
+  `${getAbsoluteServerUrl(strapi.config)}/connect/${provider}/callback`;
+
+module.exports = {
+  connect,
+  buildRedirectUri,
 };
